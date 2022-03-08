@@ -1,18 +1,16 @@
 <mat-toolbar color="primary">
 
-  <span class="pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
+  <span style="cursor: pointer"><h1 (click)="onTitleClick();"> PACER </h1></span>
 
   <a mat-button [routerLink]="'/'">
-    <mat-icon>search</mat-icon>
-    Search
+    Search Cases
   </a>
 
-  <span class="content-spacer">
-    <a mat-button [routerLink]="'/about'">
-      <mat-icon>info</mat-icon>
-      About
-    </a>
-  </span>
+  <span class="content-spacer"></span>
+
+  <a mat-button [routerLink]="'/about'">
+    About
+  </a>
 
 </mat-toolbar>
 

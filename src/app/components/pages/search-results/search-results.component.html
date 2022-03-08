@@ -1,0 +1,48 @@
+<div class="top-spacer container">
+  <div class="mat-elevation-z5">
+
+    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear style="cursor:pointer">
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name</th>
+        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.lastName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="givenName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Given Name</th>
+        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.givenName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="sendingApplication">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sending Application</th>
+        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.sendingApplication}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="diagnoses">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Diagnoses</th>
+        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.diagnoses}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
+        <td mat-cell *matCellDef="let caseRecord">
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+
+    </table>
+
+    <mat-paginator
+      #paginator
+      [length]=totalCount
+      [pageSizeOptions]="[10, 20, 50]"
+      [pageSize]="10"
+      (page)="pageChanged($event)"
+      showFirstLastButtons
+      aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+</div>
