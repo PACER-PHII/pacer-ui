@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Subscription} from "rxjs";
 import {CaseRecordService} from "../../../service/case-record.service";
-import {PageEvent} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 
 @Component({
@@ -12,12 +12,14 @@ import {PageEvent} from "@angular/material/paginator";
 })
 export class SearchResultsComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'lastName', 'givenName', 'sendingApplication', 'diagnoses'];
+  @ViewChild(MatSort) sort: MatSort;
+
+  displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses', 'action'];
   loadDataObservable$: Subscription;
   caseRecordList: [];
   totalCount = 0;
   isLoading = false;
-  dataSource = new MatTableDataSource<any>();;
+  dataSource = new MatTableDataSource<any>();
 
   constructor(
     private caseServiceRecordService: CaseRecordService
@@ -31,18 +33,19 @@ export class SearchResultsComponent implements OnInit {
         this.totalCount = response.count;
         this.dataSource = new MatTableDataSource<any>(this.caseRecordList);
         this.isLoading = false;
+        this.dataSource.sort = this.sort;
       }
     );
   }
 
   ngOnInit(): void {
+    this.getCaseRecords(null, null, null, null, null);
   }
 
-  onRowClicked(row:any) {
+  onViewCases() {}
 
-  }
-
-  pageChanged($event: PageEvent) {
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
