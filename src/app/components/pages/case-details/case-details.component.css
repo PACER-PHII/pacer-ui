@@ -13,3 +13,20 @@ td, th {
 tr:nth-child(even) {
   background-color: #F6F6F6;
 }
+
+section {
+  display: table;
+}
+
+.category-text {
+  font-size: 1.4em;
+  color:#3F51B5;
+  padding-top: 0.5em;
+}
+
+.tile-text {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-size: 2em;
+}
+

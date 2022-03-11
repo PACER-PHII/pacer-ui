@@ -21,6 +21,10 @@ export class CaseDetailsComponent implements OnInit {
     this.caseDetails = CASE_DETAILS;
   }
 
+  scrollToElement(location: string ): void {
+    const element = document.querySelector(location)
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 }
 
 
