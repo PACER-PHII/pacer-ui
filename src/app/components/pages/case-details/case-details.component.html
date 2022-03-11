@@ -1,0 +1,275 @@
+<div class="top-spacer container">
+
+  <h1>{{ caseDetails?.Patient?.Name?.family }}, {{ caseDetails?.Patient?.Name?.given }}</h1>
+  <div class="md-primary-color"><h3>{{ caseDetails?.Patient?.Sex }}</h3></div>
+  <hr>
+
+  <div class="md-primary-color" style="font-weight: bold">Provider</div>
+  <div *ngFor="let provider of caseDetails.Provider">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Address</td>
+        <td>{{provider.Address}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Country</td>
+        <td>{{provider.Country}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Email</td>
+        <td>{{provider.Email}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Fax</td>
+        <td>{{provider.Fax}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Name</td>
+        <td>{{provider.Name}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Phone</td>
+        <td>{{provider.Phone}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">ID</td>
+        <td>{{provider.ID?.value}}</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="md-primary-color" style="font-weight: bold">Facility</div>
+  <div *ngIf="caseDetails.Facility">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Address</td>
+        <td>{{caseDetails.Facility.Address}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Fax</td>
+        <td>{{caseDetails.Facility.Fax}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Fax</td>
+        <td>{{caseDetails.Facility.Fax}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Hospital Unit</td>
+        <td>{{caseDetails.Facility.Hospital_Unit}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Name</td>
+        <td>{{caseDetails.Facility.Name}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Phone</td>
+        <td>{{caseDetails.Facility.Phone}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Patient Identifying Info</div>
+  <div *ngIf="caseDetails.Patient">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Birth Date</td>
+        <td>{{caseDetails.Patient.Birth_Date | date}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Death Date</td>
+        <td>{{caseDetails.Patient.Death_Date}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Ethnicity</td>
+        <td>{{caseDetails.Patient.Ethnicity?.Display}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Insurance</td>
+        <td>{{caseDetails.Patient.Insurance_Type?.Display}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Name</td>
+        <td>{{caseDetails.Patient.Name?.given}} {{caseDetails.Patient.Name?.family}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Occupation</td>
+        <td>{{caseDetails.Patient.Occupation}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Race</td>
+        <td>{{caseDetails.Patient.Race.Display}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Sex</td>
+        <td>{{caseDetails.Patient?.Sex}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Pregnant</td>
+        <td>{{caseDetails.Patient.Pregnant}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Patient Class</td>
+        <td>{{caseDetails.Patient.PatientClass}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Address</td>
+        <td>{{caseDetails.Patient.Street_Address}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Patient Guardian Info</div>
+  <div *ngFor="let guardian of caseDetails.Parents_Guardians">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Name</td>
+        <td>{{guardian.Name?.given}} {{guardian.Name?.family}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Phone</td>
+        <td>{{guardian.Phone}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Email</td>
+        <td>{{guardian.Email}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Travel History</div>
+  <div>No data to display.</div>
+
+  <div class="md-primary-color" style="font-weight: bold">Immunization History</div>
+  <div *ngFor="let immunization of caseDetails.Immunization_History">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Code</td>
+        <td>{{immunization.Code}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">System</td>
+        <td>{{immunization.System}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Date</td>
+        <td>{{immunization.Date}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Dates</div>
+  <div>
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Code</td>
+        <td>{{caseDetails.Patient?.Admission_DateTime | date}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Date Discharged</td>
+        <td>{{caseDetails.Patient?.Date_Discharged | date}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Date of Onset</td>
+        <td>{{caseDetails.Patient?.Date_Of_Onset | date}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Diagnosis</div>
+  <div *ngFor="let diagnose of caseDetails.Patient.Diagnosis">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Code</td>
+        <td>{{diagnose.Code}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Date</td>
+        <td>{{diagnose.Date | date}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Display</td>
+        <td>{{diagnose.Display}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">System</td>
+        <td>{{diagnose.System}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Medication</div>
+  <div>
+    <table style="width: 70%">
+      <thead>
+      <tr>
+        <th>Code</th>
+        <th>Date</th>
+        <th>Display</th>
+        <th>Dosage</th>
+        <th>Frequency</th>
+        <th>System</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let medication of caseDetails.Patient['Medication Provided']">
+        <td>{{medication.Code}}</td>
+        <td>{{medication.Date | date}}</td>
+        <td>{{medication.Display}}</td>
+        <td>
+          {{medication.Dosage.Value}} {{medication.Dosage.Unit}}
+        </td>
+        <td>{{medication.Frequency}}</td>
+        <td>{{medication.System}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Lab Results</div>
+  <div *ngFor="let lab of caseDetails.Patient['Lab_Order_Code']">
+    {{lab.Display}}
+    <div>
+      <table style="width: 70%">
+        <thead>
+        <tr>
+          <th>System:Code</th>
+          <th>Date</th>
+          <th>Display</th>
+          <th>Unit</th>
+          <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let result of lab.Laboratory_Results">
+          <td>{{result.System}}:{{result.Code}}</td>
+          <td>{{result.Date}}</td>
+          <td>{{result.Display}}</td>
+          <td>{{result.Unit.Code}}</td>
+          <td>
+            {{result.Value}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="md-primary-color" style="font-weight: bold">Symptoms</div>
+  <div *ngFor="let symptom of caseDetails.Patient.Symptoms">
+    <table style="width: 50%">
+      <tr>
+        <td style="width:20%">Code</td>
+        <td>{{symptom.Code}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">Display</td>
+        <td>{{symptom.Display}}</td>
+      </tr>
+      <tr>
+        <td style="width:20%">System</td>
+        <td>{{symptom.System}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

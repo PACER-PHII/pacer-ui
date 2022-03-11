@@ -3,6 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Subscription} from "rxjs";
 import {CaseRecordService} from "../../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -22,7 +23,8 @@ export class SearchResultsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
 
   constructor(
-    private caseServiceRecordService: CaseRecordService
+    private caseServiceRecordService: CaseRecordService,
+    private router: Router
   ) { }
 
   getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
@@ -42,7 +44,9 @@ export class SearchResultsComponent implements OnInit {
     this.getCaseRecords(null, null, null, null, null);
   }
 
-  onViewCases() {}
+  onViewCases() {
+    this.router.navigate(['/case-details', 12]);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

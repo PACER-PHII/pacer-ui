@@ -43,3 +43,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .pointer {
   cursor: pointer;
 }
+
+.md-primary-color{
+  color: #3F51B5
+}

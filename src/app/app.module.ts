@@ -20,11 +20,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { CaseDetailsComponent } from './components/pages/case-details/case-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    CaseDetailsComponent
   ],
   imports: [
     BrowserModule,
