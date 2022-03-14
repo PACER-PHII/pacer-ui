@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {CaseRecordService} from "../../../service/case-record.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-case-details',
@@ -13,12 +15,20 @@ export class CaseDetailsComponent implements OnInit {
   caseDetails: any;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private caseRecordService: CaseRecordService
   ) { }
 
   ngOnInit(): void {
-    console.log(this.caseId);
     this.caseDetails = CASE_DETAILS;
+  }
+
+  getCaseDetails(caseId: number): void{
+    this.caseRecordService.getById(caseId).subscribe(
+      (response: any) => {
+        this.caseDetails = response;
+      }
+    );
   }
 
   scrollToElement(location: string ): void {

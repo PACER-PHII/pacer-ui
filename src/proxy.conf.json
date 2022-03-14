@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://127.0.0.1:8000",
+    "target": "http://yellowisland01.icl.gtri.org:8085",
     "secure": false,
     "logLevel": "debug"
   }

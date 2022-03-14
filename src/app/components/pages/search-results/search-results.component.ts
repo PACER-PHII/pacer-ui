@@ -5,6 +5,14 @@ import {CaseRecordService} from "../../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 
+export class CaseRecord {
+  id: number;
+  lastName: string;
+  givenName: string;
+  sendingApplication: string;
+  diagnoses: string;
+}
+
 
 @Component({
   selector: 'app-search-results',
@@ -17,8 +25,6 @@ export class SearchResultsComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses', 'action'];
   loadDataObservable$: Subscription;
-  caseRecordList: [];
-  totalCount = 0;
   isLoading = false;
   dataSource = new MatTableDataSource<any>();
 
@@ -27,13 +33,11 @@ export class SearchResultsComponent implements OnInit {
     private router: Router
   ) { }
 
-  getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
+  getCaseRecords(): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseServiceRecordService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
+    this.loadDataObservable$ = this.caseServiceRecordService.getAll().subscribe(
       (response: any) => {
-        this.caseRecordList = response.data;
-        this.totalCount = response.count;
-        this.dataSource = new MatTableDataSource<any>(this.caseRecordList);
+        this.dataSource = new MatTableDataSource<any>(this.getFridList(response));
         this.isLoading = false;
         this.dataSource.sort = this.sort;
       }
@@ -41,7 +45,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCaseRecords(null, null, null, null, null);
+   this.getCaseRecords();
   }
 
   onViewCases() {
@@ -51,5 +55,17 @@ export class SearchResultsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  private getFridList(responseData): CaseRecord[] {
+    return responseData.map((responseRecord)=> {
+      let caseRecord = new CaseRecord();
+      caseRecord.id = responseRecord.Id;
+      caseRecord.lastName = responseRecord?.Patient?.Name?.family;
+      caseRecord.givenName = responseRecord?.Patient?.Name?.given;
+      caseRecord.sendingApplication = responseRecord['Sending Application'];
+      caseRecord.diagnoses = "Unknown";
+      return caseRecord;
+    });
   }
 }
