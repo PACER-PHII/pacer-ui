@@ -40,6 +40,9 @@
   <div id="provider" class="top-spacer">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Provider</div>
+      <div *ngIf="!caseDetails.Provider">
+        <div style="font-style: italic;">No data to display.</div>
+      </div>
       <div>
         <table style="width: 100%;">
           <thead>
@@ -47,6 +50,7 @@
             <th>Address</th>
             <th>Country</th>
             <th>Email</th>
+            <th>Facility</th>
             <th>Fax</th>
             <th>Name</th>
             <th>Phone</th>
@@ -58,10 +62,11 @@
             <td>{{provider.Address}}</td>
             <td>{{provider.Country}}</td>
             <td>{{provider.Email}}</td>
+            <td>{{provider.Facility}}</td>
             <td>{{provider.Fax}}</td>
             <td>{{provider.Name}}</td>
             <td>{{provider.Phone}}</td>
-            <td>{{provider.ID?.value}}</td>
+            <td>{{provider.ID?.type}} {{provider.ID?.value}}</td>
           </tr>
           </tbody>
         </table>
@@ -81,10 +86,6 @@
           <tr>
             <td style="width:20%">Address</td>
             <td>{{caseDetails.Facility.Address}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">Fax</td>
-            <td>{{caseDetails.Facility.Fax}}</td>
           </tr>
           <tr>
             <td style="width:20%">Fax</td>
@@ -116,47 +117,47 @@
       <div *ngIf="caseDetails.Patient">
         <table style="width: 100%">
           <tr>
-            <td style="width:20%">Birth Date</td>
+            <td>Birth Date</td>
             <td>{{caseDetails.Patient.Birth_Date | date}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Death Date</td>
+            <td>Death Date</td>
             <td>{{caseDetails.Patient.Death_Date}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Ethnicity</td>
+            <td>Ethnicity</td>
             <td>{{caseDetails.Patient.Ethnicity?.Display}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Insurance</td>
+            <td>Insurance</td>
             <td>{{caseDetails.Patient.Insurance_Type?.Display}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Name</td>
+            <td>Name</td>
             <td>{{caseDetails.Patient.Name?.given}} {{caseDetails.Patient.Name?.family}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Occupation</td>
+            <td>Occupation</td>
             <td>{{caseDetails.Patient.Occupation}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Race</td>
+            <td>Race</td>
             <td>{{caseDetails.Patient.Race.Display}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Sex</td>
+            <td>Sex</td>
             <td>{{caseDetails.Patient?.Sex}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Pregnant</td>
+            <td>Pregnant</td>
             <td>{{caseDetails.Patient.Pregnant}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Patient Class</td>
+            <td>Patient Class</td>
             <td>{{caseDetails.Patient.PatientClass}}</td>
           </tr>
           <tr>
-            <td style="width:20%">Address</td>
+            <td>Address</td>
             <td>{{caseDetails.Patient.Street_Address}}</td>
           </tr>
         </table>
@@ -167,23 +168,25 @@
   <div class="top-spacer" id="guardian">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Patient Guardian Info</div>
-      <div *ngIf="!caseDetails.Parents_Guardians || caseDetails.Parents_Guardians == 0">
+      <div *ngIf="!caseDetails?.Parents_Guardians?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngFor="let guardian of caseDetails.Parents_Guardians">
-        <table style="width: 50%">
+      <div *ngIf="caseDetails?.Parents_Guardians?.length > 0">
+        <table style="width: 100%;">
+          <thead>
           <tr>
-            <td style="width:20%">Name</td>
-            <td>{{guardian.Name?.given}} {{guardian.Name?.family}}</td>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
           </tr>
-          <tr>
-            <td style="width:20%">Phone</td>
+          </thead>
+          <tbody>
+          <tr *ngFor="let guardian of caseDetails.Parents_Guardians">
+            <td>{{guardian.Name}}</td>
             <td>{{guardian.Phone}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">Email</td>
             <td>{{guardian.Email}}</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </mat-card>
@@ -199,23 +202,25 @@
   <div class="top-spacer" id="immunization">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Immunization History</div>
-      <div *ngIf="!caseDetails.Immunization_History || caseDetails.Immunization_Historyleading ==0">
+      <div *ngIf="!caseDetails?.Immunization_History?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngFor="let immunization of caseDetails.Immunization_History">
-        <table style="width: 100%">
+      <div *ngIf="caseDetails?.Immunization_History?.length > 0">
+        <table style="width: 100%;">
+          <thead>
           <tr>
-            <td style="width:20%">Code</td>
+            <th>Code</th>
+            <th>System</th>
+            <th>Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let immunization of caseDetails.Immunization_History">
             <td>{{immunization.Code}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">System</td>
             <td>{{immunization.System}}</td>
+            <td>{{immunization.Date | date}}</td>
           </tr>
-          <tr>
-            <td style="width:20%">Date</td>
-            <td>{{immunization.Date}}</td>
-          </tr>
+          </tbody>
         </table>
       </div>
     </mat-card>
@@ -223,7 +228,7 @@
 
   <div class="top-spacer" id="dates">
     <mat-card class="mat-elevation-z8">
-      <div class="category-text">Dates</div>
+      <div class="category-text">Clinical Dates</div>
       <div *ngIf="!caseDetails.Patient">
         <div style="font-style: italic;">No data to display.</div>
       </div>
@@ -249,27 +254,27 @@
   <div class="top-spacer" id="diagnostics">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Diagnosis</div>
-      <div *ngIf="!caseDetails.Patient.Diagnosis|| caseDetails.Patient.Diagnosis.length == 0">
+      <div *ngIf="!caseDetails.Patient?.Diagnosis?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngFor="let diagnose of caseDetails.Patient.Diagnosis">
-        <table style="width: 100%">
+      <div *ngIf="caseDetails.Patient?.Diagnosis?.length > 0">
+        <table style="width: 100%;">
+          <thead>
           <tr>
-            <td style="width:20%">Code</td>
+            <th>Code</th>
+            <th>Date</th>
+            <th>Display</th>
+            <th>System</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let diagnose of caseDetails.Patient.Diagnosis">
             <td>{{diagnose.Code}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">Date</td>
             <td>{{diagnose.Date | date}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">Display</td>
             <td>{{diagnose.Display}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">System</td>
             <td>{{diagnose.System}}</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </mat-card>
@@ -278,7 +283,7 @@
   <div class="top-spacer"  id="medication">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Medication</div>
-      <div *ngIf="!caseDetails.Patient['Medication Provided']|| caseDetails.Patient['Medication Provided'].length == 0">
+      <div *ngIf="!caseDetails.Patient['Medication Provided']?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
       <div *ngIf="caseDetails.Patient['Medication Provided'].length > 0">
@@ -313,7 +318,7 @@
   <div class="top-spacer"  id="lab_results">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Lab Results</div>
-      <div *ngIf="!caseDetails.Patient['Lab_Order_Code'] || caseDetails.Patient['Lab_Order_Code'].length == 0">
+      <div *ngIf="!caseDetails.Patient['Lab_Order_Code']?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
       <div class="top-spacer" *ngFor="let lab of caseDetails.Patient['Lab_Order_Code']">
@@ -349,23 +354,27 @@
   <div class="top-spacer" id="symptoms">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Symptoms</div>
-      <div *ngIf="!caseDetails.Patient.Symptoms || caseDetails.Patient.Symptoms.length == 0">
+      <div *ngIf="!caseDetails?.Patient?.Symptoms?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngFor="let symptom of caseDetails.Patient.Symptoms">
+      <div *ngIf="caseDetails.Patient.Symptoms.length > 0">
         <table style="width: 100%">
+          <thead>
           <tr>
-            <td style="width:20%">Code</td>
+            <th>Code</th>
+            <th>Date</th>
+            <th>Display</th>
+            <th>System</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let symptom of caseDetails.Patient.Symptoms">
             <td>{{symptom.Code}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">Display</td>
+            <td>{{symptom.Date | date}}</td>
             <td>{{symptom.Display}}</td>
-          </tr>
-          <tr>
-            <td style="width:20%">System</td>
             <td>{{symptom.System}}</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </mat-card>
