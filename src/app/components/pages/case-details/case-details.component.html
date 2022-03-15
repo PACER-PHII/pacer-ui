@@ -40,10 +40,10 @@
   <div id="provider" class="top-spacer">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Provider</div>
-      <div *ngIf="!caseDetails.Provider">
+      <div *ngIf="!caseDetails.Provider?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div>
+      <div *ngIf="caseDetails?.Provider?.length> 0">
         <table style="width: 100%;">
           <thead>
           <tr>
@@ -168,10 +168,10 @@
   <div class="top-spacer" id="guardian">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Patient Guardian Info</div>
-      <div *ngIf="!caseDetails?.Parents_Guardians?.length">
+      <div *ngIf="!caseDetails?.Patient?.Parents_Guardians?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails?.Parents_Guardians?.length > 0">
+      <div *ngIf="caseDetails?.Patient?.Parents_Guardians?.length > 0">
         <table style="width: 100%;">
           <thead>
           <tr>
@@ -181,8 +181,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let guardian of caseDetails.Parents_Guardians">
-            <td>{{guardian.Name}}</td>
+          <tr *ngFor="let guardian of caseDetails.Patient.Parents_Guardians">
+            <td>{{guardian.Name.given}} {{guardian.Name.family}}</td>
             <td>{{guardian.Phone}}</td>
             <td>{{guardian.Email}}</td>
           </tr>
@@ -202,10 +202,10 @@
   <div class="top-spacer" id="immunization">
     <mat-card class="mat-elevation-z8">
       <div class="category-text">Immunization History</div>
-      <div *ngIf="!caseDetails?.Immunization_History?.length">
+      <div *ngIf="!caseDetails?.Patient?.Immunization_History?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails?.Immunization_History?.length > 0">
+      <div *ngIf="caseDetails?.Patient?.Immunization_History?.length > 0">
         <table style="width: 100%;">
           <thead>
           <tr>
@@ -215,7 +215,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let immunization of caseDetails.Immunization_History">
+          <tr *ngFor="let immunization of caseDetails.Patient.Immunization_History">
             <td>{{immunization.Code}}</td>
             <td>{{immunization.System}}</td>
             <td>{{immunization.Date | date}}</td>
