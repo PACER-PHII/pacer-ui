@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'http://yellowisland01.icl.gtri.org:8085'
 };
