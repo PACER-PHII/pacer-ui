@@ -6,10 +6,12 @@ import {Router} from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'pacer-ui';
-  private router: Router;
-
+  constructor(
+    private router: Router,
+  ){}
   onTitleClick() {
     this.router.navigate(['/']);
   }

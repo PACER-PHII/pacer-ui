@@ -1,18 +1,13 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="position-fixed toolbar">
+  <mat-toolbar-row>
+    <span style="cursor: pointer"><h1 (click)="onTitleClick();"> PACER </h1></span>
 
-  <span style="cursor: pointer"><h1 (click)="onTitleClick();"> PACER </h1></span>
-
-  <a mat-button [routerLink]="'/'">
-    Search Cases
-  </a>
-
-  <span class="content-spacer"></span>
-
-  <a mat-button [routerLink]="'/about'">
-    About
-  </a>
+    <a mat-button [routerLink]="'/'">
+      <mat-icon>search</mat-icon>
+      Search Cases
+    </a>
+  </mat-toolbar-row>
 
 </mat-toolbar>
 
 <router-outlet></router-outlet>
-

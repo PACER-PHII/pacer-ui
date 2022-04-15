@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {CaseRecordService} from "../../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 export class CaseRecord {
   id: number;
@@ -23,33 +24,46 @@ export class SearchResultsComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses', 'action'];
+  displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses'];
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource = new MatTableDataSource<any>();
 
   constructor(
     private caseServiceRecordService: CaseRecordService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar,
   ) { }
 
   getCaseRecords(): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseServiceRecordService.getAll().subscribe(
-      (response: any) => {
-        this.dataSource = new MatTableDataSource<any>(this.getFridList(response));
-        this.isLoading = false;
-        this.dataSource.sort = this.sort;
+    this.loadDataObservable$ = this.caseServiceRecordService.getAll().subscribe({
+        next: (response: any) => {
+          this.dataSource = new MatTableDataSource<any>(this.getFridList(response));
+          this.isLoading = false;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          this._snackBar.open("Unable to load records. Server error.", 'x' ,{
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['error-color']
+          });
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
       }
     );
   }
 
   ngOnInit(): void {
-   this.getCaseRecords();
+    this.getCaseRecords();
   }
 
-  onViewCases() {
-    this.router.navigate(['/case-details', 12]);
+  onViewCases(record: any) {
+    this.router.navigate(['/case-details', record.id]);
   }
 
   applyFilter(event: Event) {

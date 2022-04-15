@@ -47,3 +47,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .md-primary-color{
   color: #3F51B5
 }
+
+.position-fixed {
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+}
+
+.toolbar {
+  max-height: 5vh;
+  min-height: 5vh;
+}
+

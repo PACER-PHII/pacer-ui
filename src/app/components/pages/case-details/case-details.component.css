@@ -24,9 +24,13 @@ section {
   padding-top: 0.5em;
 }
 
-.tile-text {
-  margin-bottom: 1em;
-  margin-top: 1em;
-  font-size: 2em;
+.center-content {
+  flex: 1 1 auto;
+  text-align: center;
 }
 
+/*We need offset the anchors because we added two headers each with height 5vh*/
+/*Without this the anchor is not going to point the right location in the dom*/
+.anchor-offset {
+  scroll-margin-top: 10vh;
+}

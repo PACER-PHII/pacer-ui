@@ -23,6 +23,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { CaseDetailsComponent } from './components/pages/case-details/case-details.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatListModule,
     MatTooltipModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
