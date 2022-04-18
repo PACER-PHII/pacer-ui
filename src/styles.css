@@ -51,11 +51,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .position-fixed {
   position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 100;
 }
 
 .toolbar {
   max-height: 5vh;
   min-height: 5vh;
+}
+
+/*
+Give some space to the snackbar container. Google does not plan to allow for vertical center position
+See https://github.com/angular/components/issues/23737 for more info
+*/
+.mat-snack-bar-container {
+  margin-top: 10vh !important;
 }
 
