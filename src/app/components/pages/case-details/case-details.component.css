@@ -34,3 +34,8 @@ section {
 .anchor-offset {
   scroll-margin-top: 10vh;
 }
+
+.mat-list-base .mat-list-item {
+  color: #3f51b5;
+}
+

@@ -1,48 +1,105 @@
+<mat-sidenav-container [hasBackdrop]=false fullscreen>
+
+<mat-sidenav #sidenav mode="over">
+
+  <mat-nav-list (click)="sidenav.close()" style="margin-top: 5vh">
+
+    <a mat-list-item (click)="scroll(provider)" color="primary">
+      Provider
+    </a>
+
+    <a mat-list-item (click)="scroll(facility)">
+      Faculty
+    </a>
+
+    <a mat-list-item (click)="scroll(identifying_info)">
+      Identifying Info
+    </a>
+
+    <a mat-list-item (click)="scroll(guardian)">
+      Guardian
+    </a>
+
+    <a mat-list-item (click)="scroll(immunization)">
+      Immunization
+    </a>
+
+    <a mat-list-item (click)="scroll(dates)">
+      Dates
+    </a>
+
+    <a mat-list-item (click)="scroll(diagnostics)">
+      Diagnostics
+    </a>
+
+    <a mat-list-item (click)="scroll(medication)">
+      Medication
+    </a>
+
+    <a mat-list-item (click)="scroll(lab_results)">
+      Lab Results
+    </a>
+
+    <a mat-list-item (click)="scroll(symptoms)">
+      Symptoms
+    </a>
+
+
+  </mat-nav-list>
+
+</mat-sidenav>
+
+
 <mat-toolbar class="mat-elevation-z1 position-fixed toolbar" style="margin-top: 5vh;">
   <mat-toolbar-row>
-    <span class="container">
-    {{ caseDetails?.Patient?.Name?.family }}, {{ caseDetails?.Patient?.Name?.given }}
-    <button mat-button (click)="scrollToElement('#provider')" color="primary">
-      Provider
+    <button *ngIf="!isLargeScreenMode" color="primary"
+            matTooltip="Open Shortcut Menu" aria-label="menu open" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
     </button>
-    <button  mat-button (click)="scrollToElement('#facility')" color="primary">
-      Facility
-    </button >
-    <button  mat-button (click)="scrollToElement('#identifying_info')" color="primary">
-      Identifying Info
-    </button >
-    <button  mat-button (click)="scrollToElement('#guardian')" color="primary">
-      Guardian Info
-    </button >
-    <button  mat-button (click)="scrollToElement('#immunization')" color="primary">
-      Immunization
-    </button >
-    <button  mat-button (click)="scrollToElement('#dates')" color="primary">
-      Dates
-    </button >
-    <button  mat-button (click)="scrollToElement('#diagnostics')" color="primary">
-      Diagnostics
-    </button >
-    <button  mat-button (click)="scrollToElement('#medication')" color="primary">
-      Medication
-    </button >
-    <button  mat-button (click)="scrollToElement('#lab_results')" color="primary">
-      Lab Results
-    </button >
-    <button  mat-button (click)="scrollToElement('#symptoms')" color="primary">
-      Symptoms
-    </button >
+    <span class="container">
+        {{ caseDetails?.Patient?.Name?.family }}, {{ caseDetails?.Patient?.Name?.given }}
+      <span *ngIf="isLargeScreenMode">
+      <button mat-button (click)="scroll(provider)" color="primary">
+        Provider
+      </button>
+      <button mat-button (click)="scroll(facility)" color="primary">
+        Facility
+      </button>
+      <button mat-button (click)="scroll(identifying_info)" color="primary">
+        Identifying Info
+      </button>
+      <button mat-button (click)="scroll(guardian)" color="primary">
+        Guardian Info
+      </button>
+      <button mat-button (click)="scroll(immunization)" color="primary">
+        Immunization
+      </button>
+      <button mat-button (click)="scroll(dates)" color="primary">
+        Dates
+      </button>
+      <button mat-button (click)="scroll(diagnostics)" color="primary">
+        Diagnostics
+      </button>
+      <button mat-button (click)="scroll(medication)" color="primary">
+        Medication
+      </button>
+      <button mat-button (click)="scroll(lab_results)" color="primary">
+        Lab Results
+      </button>
+      <button mat-button (click)="scroll(symptoms)" color="primary">
+        Symptoms
+      </button>
+      </span>
     </span>
-
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="top-spacer bottom-spacer container" style="padding-bottom: 1em; margin-top: 10vh;">
+<div class="top-spacer bottom-spacer container" style="padding-bottom: 1em; margin-top: 10vh;" (click)="sidenav.close()" >
 
-  <div id="provider" class="top-spacer anchor-offset">
+  <div class="top-spacer anchor-offset" #provider>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Provider</div>
-      <div *ngIf="!caseDetails.Provider?.length">
+      <div *ngIf="!caseDetails?.Provider?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
       <div *ngIf="caseDetails?.Provider?.length> 0">
@@ -77,13 +134,13 @@
   </div>
 
 
-  <div class="top-spacer anchor-offset" id="facility">
+  <div class="top-spacer anchor-offset" #facility>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Facility</div>
-      <div *ngIf="!caseDetails.Facility">
+      <div *ngIf="!caseDetails?.Facility">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails.Facility">
+      <div *ngIf="caseDetails?.Facility">
         <table style="width: 100%">
           <tr>
             <td style="width:20%">Address</td>
@@ -110,13 +167,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="identifying_info">
+  <div class="top-spacer anchor-offset" #identifying_info>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Patient Identifying Info</div>
-      <div *ngIf="!caseDetails.Patient">
+      <div *ngIf="!caseDetails?.Patient">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails.Patient">
+      <div *ngIf="caseDetails?.Patient">
         <table style="width: 100%">
           <tr>
             <td>Birth Date</td>
@@ -167,7 +224,7 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="guardian">
+  <div class="top-spacer anchor-offset" #guardian>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Patient Guardian Info</div>
       <div *ngIf="!caseDetails?.Patient?.Parents_Guardians?.length">
@@ -201,7 +258,7 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="immunization">
+  <div class="top-spacer anchor-offset" #immunization>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Immunization History</div>
       <div *ngIf="!caseDetails?.Patient?.Immunization_History?.length">
@@ -228,13 +285,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="dates">
+  <div class="top-spacer anchor-offset" #dates>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Clinical Dates</div>
-      <div *ngIf="!caseDetails.Patient">
+      <div *ngIf="!caseDetails?.Patient">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div>
+      <div *ngIf="caseDetails?.Patient">
         <table style="width: 100%">
           <tr>
             <td style="width:20%">Code</td>
@@ -253,13 +310,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="diagnostics">
+  <div class="top-spacer anchor-offset" #diagnostics>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Diagnosis</div>
-      <div *ngIf="!caseDetails.Patient?.Diagnosis?.length">
+      <div *ngIf="!caseDetails?.Patient?.Diagnosis?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails.Patient?.Diagnosis?.length > 0">
+      <div *ngIf="caseDetails?.Patient?.Diagnosis?.length > 0">
         <table style="width: 100%;">
           <thead>
           <tr>
@@ -282,13 +339,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset"  id="medication">
+  <div class="top-spacer anchor-offset"  #medication>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Medication</div>
-      <div *ngIf="!caseDetails.Patient['Medication Provided']?.length">
+      <div *ngIf="!caseDetails?.Patient['Medication Provided']?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails.Patient['Medication Provided'].length > 0">
+      <div *ngIf="caseDetails?.Patient['Medication Provided'].length > 0">
         <table style="width: 100%">
           <thead>
           <tr>
@@ -317,13 +374,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset"  id="lab_results">
+  <div class="top-spacer anchor-offset"  #lab_results>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Lab Results</div>
-      <div *ngIf="!caseDetails.Patient['Lab_Order_Code']?.length">
+      <div *ngIf="!caseDetails?.Patient['Lab_Order_Code']?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div class="top-spacer" *ngFor="let lab of caseDetails.Patient['Lab_Order_Code']">
+      <div class="top-spacer" *ngFor="let lab of caseDetails?.Patient['Lab_Order_Code']">
         {{lab.Display}}
         <div>
           <table style="width: 100%">
@@ -353,13 +410,13 @@
     </mat-card>
   </div>
 
-  <div class="top-spacer anchor-offset" id="symptoms">
+  <div class="top-spacer anchor-offset" #symptoms>
     <mat-card class="mat-elevation-z4">
       <div class="category-text">Symptoms</div>
       <div *ngIf="!caseDetails?.Patient?.Symptoms?.length">
         <div style="font-style: italic;">No data to display.</div>
       </div>
-      <div *ngIf="caseDetails.Patient.Symptoms.length > 0">
+      <div *ngIf="caseDetails?.Patient.Symptoms.length > 0">
         <table style="width: 100%">
           <thead>
           <tr>
@@ -383,3 +440,4 @@
   </div>
 
 </div>
+</mat-sidenav-container>
