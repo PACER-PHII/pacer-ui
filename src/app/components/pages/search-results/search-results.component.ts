@@ -5,6 +5,7 @@ import {CaseRecordService} from "../../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatPaginator} from "@angular/material/paginator";
 
 export class CaseRecord {
   id: number;
@@ -23,6 +24,7 @@ export class CaseRecord {
 export class SearchResultsComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses'];
   loadDataObservable$: Subscription;
@@ -42,6 +44,7 @@ export class SearchResultsComponent implements OnInit {
           this.dataSource = new MatTableDataSource<any>(this.getFridList(response));
           this.isLoading = false;
           this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
         },
         error: (error) => {
           this._snackBar.open("Unable to load records. Server error.", 'x' ,{
@@ -69,6 +72,9 @@ export class SearchResultsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   private getFridList(responseData): CaseRecord[] {
