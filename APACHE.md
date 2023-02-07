@@ -86,3 +86,10 @@ security purposes as needed, but that is outside the scope of this guide.)
 ```
 After saving and exiting the file, you will need to restart the httpd server with: `service httpd restart`. At this point, accessing
 the `/case-details/{id}` route should function as expected, loading the case with that ID.
+
+
+## Troubleshooting
+### Permissions and SELinux Settings
+If the application built properly but the Apache error logs (default path of `/var/log/httpd/error_log`) report that the static files cannot
+be accessed with error *AH00132*, you may need to fix the reset the context of the files as they likely originated in a home directory either
+from the build or copy to the server. To do so, run `sudo restorecon -R /var/www/`.
