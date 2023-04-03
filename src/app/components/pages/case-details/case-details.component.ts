@@ -1,7 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CaseRecordService} from "../../../service/case-record.service";
-import {MatTableDataSource} from "@angular/material/table";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({

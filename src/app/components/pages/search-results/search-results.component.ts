@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
 import {Subscription} from "rxjs";
 import {CaseRecordService} from "../../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatTableDataSource} from "@angular/material/table";
 
 export class CaseRecord {
   id: number;
