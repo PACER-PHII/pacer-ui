@@ -66,3 +66,15 @@ See https://github.com/angular/components/issues/23737 for more info
 .mat-snack-bar-container {
   margin-top: 10vh !important;
 }
+
+.box {
+  display: flex;
+
+}
+.align-center {
+  align-items: center;
+}
+
+.push {
+  margin-left: auto;
+}

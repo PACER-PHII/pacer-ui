@@ -23,6 +23,10 @@ table {
   cursor: pointer;
 }
 
-.mat-row:hover .mat-cell {
-  border-color: currentColor;
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: whitesmoke;
 }

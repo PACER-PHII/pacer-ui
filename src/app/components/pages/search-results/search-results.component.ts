@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['recordId', 'lastName', 'givenName', 'diagnoses', 'dob', 'gender', 'status'];
+  displayedColumns: string[] = ['recordId', 'diagnoses', 'lastName', 'givenName', 'dob', 'gender', 'status', 'actions'];
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource: MatTableDataSource<CaseRecordDTO>;
@@ -67,5 +67,18 @@ export class SearchResultsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  onExportToCSV() {
+    //TODO implement export to excel
+    console.log("Exporting to Excel")
+  }
+
+  onShowHistory(record: CaseRecordDTO) {
+    //TODO Implement Action
+  }
+
+  onTriggerRecord(record) {
+    //TODO Implement Action
   }
 }
