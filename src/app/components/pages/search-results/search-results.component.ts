@@ -6,15 +6,7 @@ import {Router} from "@angular/router";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
-
-export class CaseRecord {
-  id: number;
-  lastName: string;
-  givenName: string;
-  sendingApplication: string;
-  diagnoses: string;
-}
-
+import {CaseRecordDTO} from "../../../domain/case-record-dto";
 
 @Component({
   selector: 'app-search-results',
@@ -26,28 +18,28 @@ export class SearchResultsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['id', 'lastName', 'givenName', 'sendingApplication', 'diagnoses'];
+  displayedColumns: string[] = ['recordId', 'lastName', 'givenName', 'diagnoses', 'dob', 'gender', 'status'];
   loadDataObservable$: Subscription;
   isLoading = false;
-  dataSource = new MatTableDataSource<any>();
+  dataSource: MatTableDataSource<CaseRecordDTO>;
 
   constructor(
     private caseServiceRecordService: CaseRecordService,
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
   ) { }
 
   getCaseRecords(): void {
     this.isLoading = true;
     this.loadDataObservable$ = this.caseServiceRecordService.getAll().subscribe({
-        next: (response: any) => {
-          this.dataSource = new MatTableDataSource<any>(this.getFridList(response));
+        next: (response: CaseRecordDTO[]) => {
+          this.dataSource = new MatTableDataSource<CaseRecordDTO>(response);
           this.isLoading = false;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         },
         error: (error) => {
-          this._snackBar.open("Unable to load records. Server error.", 'x' ,{
+          this.snackBar.open("Unable to load records. Server error.", 'x' ,{
             horizontalPosition: 'center',
             verticalPosition: 'top',
             panelClass: ['error-color']
@@ -66,7 +58,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onViewCases(record: any) {
-    this.router.navigate(['/case-details', record.id]);
+    this.router.navigate(['/case-details', record.recordId]);
   }
 
   applyFilter(event: Event) {
@@ -75,17 +67,5 @@ export class SearchResultsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  private getFridList(responseData): CaseRecord[] {
-    return responseData.map((responseRecord)=> {
-      let caseRecord = new CaseRecord();
-      caseRecord.id = responseRecord.Id;
-      caseRecord.lastName = responseRecord?.Patient?.Name?.family;
-      caseRecord.givenName = responseRecord?.Patient?.Name?.given;
-      caseRecord.sendingApplication = responseRecord['Sending Application'];
-      caseRecord.diagnoses = "Unknown";
-      return caseRecord;
-    });
   }
 }
