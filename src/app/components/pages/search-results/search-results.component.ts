@@ -31,7 +31,7 @@ export class SearchResultsComponent implements OnInit {
 
   getCaseRecords(): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseServiceRecordService.getAll().subscribe({
+    this.loadDataObservable$ = this.caseServiceRecordService.getCaseRecordsList().subscribe({
         next: (response: CaseRecordDTO[]) => {
           this.dataSource = new MatTableDataSource<CaseRecordDTO>(response);
           this.isLoading = false;

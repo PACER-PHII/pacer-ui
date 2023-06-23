@@ -24,15 +24,15 @@ export class CaseRecordDTO {
   }
 
   private getStatus(responseRecord: any){
-    if(!responseRecord?.status || responseRecord.status?.length == 0){
+    if(!responseRecord?.Status || responseRecord.Status?.length == 0){
       console.warn("Case Record is missing status field " + JSON.stringify(responseRecord))
       return null;
     }
-    else if (responseRecord.status.length != 1){
+    else if (responseRecord.Status.length != 1){
       console.warn("Invalid Status Code passed for record " + JSON.stringify(responseRecord));
       return null;
     }
-    const statusCode = responseRecord.status;
+    const statusCode = responseRecord.Status;
     switch(statusCode){
       case "R":
         return CaseRecordStatus.R;

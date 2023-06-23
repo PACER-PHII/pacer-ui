@@ -11,16 +11,24 @@ export class CaseRecordService {
 
   constructor( private http: HttpClient ) { }
 
-  getAll():  Observable<CaseRecordDTO[]> {
+  getCaseRecordsList():  Observable<CaseRecordDTO[]> {
     return this.http.get(environment.apiUrl + '/ecr-manager/ECR').pipe(map((resultList: any) =>
         resultList.map(result => new CaseRecordDTO(result))
       ),
     );
   };
 
-  getById(id: number):  Observable<any> {
+  getRecordDetailsById(recordId: number):  Observable<any> {
     return this.http.get(environment.apiUrl + '/ecr-manager/ECR', {params: new HttpParams()
-      .append('id', id)}).pipe(map((result: any) =>
+      .append('id', recordId)}).pipe(map((result: any) =>
+        result as Object
+      ),
+    );
+  };
+
+  getRecordHistoryById(recordId: number):  Observable<any> {
+    return this.http.get("http://brownunify01.icl.gtri.org:8085/ecr-manager/ECRhistory", {params: new HttpParams()
+        .append('id', recordId)}).pipe(map((result: any) =>
         result as Object
       ),
     );

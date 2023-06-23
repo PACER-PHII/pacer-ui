@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordService} from "../../../service/case-record.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
@@ -11,7 +11,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 export class CaseDetailsComponent implements OnInit {
 
-  caseId = parseInt(this.route.snapshot.params['id']);
+  recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;
   isLargeScreenMode = true;
 
@@ -19,10 +19,11 @@ export class CaseDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
     private responsive: BreakpointObserver,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getCaseDetails(this.caseId);
+    this.getCaseDetails(this.recordId);
 
     this.responsive.observe([
       Breakpoints.Handset,
@@ -42,7 +43,7 @@ export class CaseDetailsComponent implements OnInit {
   }
 
   getCaseDetails(caseId: number): void{
-    this.caseRecordService.getById(caseId).subscribe(
+    this.caseRecordService.getRecordDetailsById(caseId).subscribe(
       (response: any) => {
         this.caseDetails = response;
       }
@@ -51,5 +52,9 @@ export class CaseDetailsComponent implements OnInit {
 
   scroll(element: HTMLDivElement) {
     element.scrollIntoView();
+  }
+
+  onViewRecordHistory() {
+    this.router.navigate(['/record-history', this.recordId]);
   }
 }

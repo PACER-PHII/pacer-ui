@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(
     private router: Router,
   ){}
-  onTitleClick() {
+  onSearchRecords() {
     this.router.navigate(['/']);
   }
 }

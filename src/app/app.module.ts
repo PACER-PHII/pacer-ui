@@ -24,12 +24,14 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { RecordHistoryComponent } from './components/record-history/record-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
-    CaseDetailsComponent
+    CaseDetailsComponent,
+    RecordHistoryComponent
   ],
   imports: [
     BrowserModule,
