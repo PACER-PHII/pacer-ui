@@ -6,7 +6,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 @Component({
   selector: 'app-record-details',
   templateUrl: './record-details.component.html',
-  styleUrls: ['./record-details.component.css']
+  styleUrls: ['./record-details.component.scss']
 })
 
 export class RecordDetailsComponent implements OnInit {

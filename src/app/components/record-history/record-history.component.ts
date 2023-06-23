@@ -5,7 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-record-history',
   templateUrl: './record-history.component.html',
-  styleUrls: ['./record-history.component.css']
+  styleUrls: ['./record-history.component.scss']
 })
 export class RecordHistoryComponent implements OnInit {
   recordHistory: any;
