@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {CaseRecordService} from "../../../service/case-record.service";
+import {CaseRecordService} from "../../service/case-record.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
-  selector: 'app-case-details',
-  templateUrl: './case-details.component.html',
-  styleUrls: ['./case-details.component.css']
+  selector: 'app-record-details',
+  templateUrl: './record-details.component.html',
+  styleUrls: ['./record-details.component.css']
 })
 
-export class CaseDetailsComponent implements OnInit {
+export class RecordDetailsComponent implements OnInit {
 
   recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;

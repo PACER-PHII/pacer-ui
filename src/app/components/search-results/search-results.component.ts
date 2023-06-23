@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from "rxjs";
-import {CaseRecordService} from "../../../service/case-record.service";
+import {CaseRecordService} from "../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
-import {CaseRecordDTO} from "../../../domain/case-record-dto";
+import {CaseRecordDTO} from "../../domain/case-record-dto";
 
 @Component({
   selector: 'app-search-results',
@@ -58,7 +58,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onViewCases(record: any) {
-    this.router.navigate(['/case-details', record.recordId]);
+    this.router.navigate(['/record-details', record.recordId]);
   }
 
   applyFilter(event: Event) {

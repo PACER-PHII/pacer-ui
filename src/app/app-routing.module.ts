@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {SearchResultsComponent} from "./components/pages/search-results/search-results.component";
-import {CaseDetailsComponent} from "./components/pages/case-details/case-details.component";
+import {RecordDetailsComponent} from "./components/record-details/record-details.component";
 import {RecordHistoryComponent} from "./components/record-history/record-history.component";
+import {SearchResultsComponent} from "./components/search-results/search-results.component";
 
 const routes: Routes = [
   {
@@ -10,8 +10,8 @@ const routes: Routes = [
     component: SearchResultsComponent
   },
   {
-    path: 'case-details/:id',
-    component: CaseDetailsComponent
+    path: 'record-details/:id',
+    component: RecordDetailsComponent
   },
   {
     path: 'record-history/:id',

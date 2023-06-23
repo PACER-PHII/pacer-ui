@@ -4,14 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchResultsComponent } from './components/pages/search-results/search-results.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatSortModule} from "@angular/material/sort";
 import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
-import { CaseDetailsComponent } from './components/pages/case-details/case-details.component';
+import { RecordDetailsComponent } from './components/record-details/record-details.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatTableModule} from "@angular/material/table";
@@ -30,7 +30,7 @@ import { RecordHistoryComponent } from './components/record-history/record-histo
   declarations: [
     AppComponent,
     SearchResultsComponent,
-    CaseDetailsComponent,
+    RecordDetailsComponent,
     RecordHistoryComponent
   ],
   imports: [
