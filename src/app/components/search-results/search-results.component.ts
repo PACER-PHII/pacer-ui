@@ -78,7 +78,7 @@ export class SearchResultsComponent implements OnInit {
     //TODO Implement Action
   }
 
-  onTriggerRecord(record) {
+  onQueryRecord(record) {
     //TODO Implement Action
   }
 }

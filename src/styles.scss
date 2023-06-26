@@ -69,12 +69,16 @@ See https://github.com/angular/components/issues/23737 for more info
 
 .box {
   display: flex;
-
 }
+
 .align-center {
   align-items: center;
 }
 
 .push {
   margin-left: auto;
+}
+
+.top-margin{
+  margin-top: 16px;
 }

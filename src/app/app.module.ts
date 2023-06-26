@@ -25,13 +25,18 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecordHistoryComponent } from './components/record-history/record-history.component';
+import { PersonInfoComponent } from './components/person-info/person-info.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import { RecordDetailsTableComponent } from './components/record-details-table/record-details-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
     RecordDetailsComponent,
-    RecordHistoryComponent
+    RecordHistoryComponent,
+    PersonInfoComponent,
+    RecordDetailsTableComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { RecordHistoryComponent } from './components/record-history/record-histo
     MatTooltipModule,
     MatTabsModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

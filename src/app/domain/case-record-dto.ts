@@ -13,7 +13,7 @@ export class CaseRecordDTO {
 
 
   constructor(responseRecord: any){
-    this.recordId = responseRecord.Id ?? null;
+    this.recordId = responseRecord.Patient.ID?.[0]?.value ?? null;
     this.lastName = responseRecord?.Patient?.Name?.family ?? '';
     this.givenName = responseRecord?.Patient?.Name?.given ?? '';
     this.diagnoses = responseRecord?.Patient?.Diagnosis?.[0] ?? null;
