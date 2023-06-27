@@ -28,7 +28,7 @@ export class CaseRecordService {
 
   getRecordHistoryById(recordId: number):  Observable<any> {
     return this.http.get("http://brownunify01.icl.gtri.org:8085/ecr-manager/ECRhistory", {params: new HttpParams()
-        .append('patientId', recordId)}).pipe(map((result: any) =>
+        .append('id', recordId)}).pipe(map((result: any) =>
         result as Object
       ),
     );

@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['recordId', 'diagnoses', 'lastName', 'givenName', 'dob', 'gender', 'status', 'actions'];
+  displayedColumns: string[] = ['medicalRecordNumber', 'diagnoses', 'lastName', 'givenName', 'dob', 'gender', 'status', 'actions'];
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource: MatTableDataSource<CaseRecordDTO>;
@@ -58,6 +58,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onViewCases(record: any) {
+    console.log(record);
     this.router.navigate(['/record-details', record.recordId]);
   }
 

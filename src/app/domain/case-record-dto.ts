@@ -2,7 +2,8 @@ import {CaseRecordStatus} from "./case-record-status";
 import {AdministrativeSex} from "./admnistrative-sex";
 
 export class CaseRecordDTO {
-  recordId: number | null;
+  recordId: number;
+  medicalRecordNumber: number | null;
   lastName: string;
   givenName: string;
   diagnoses: string;
@@ -13,7 +14,8 @@ export class CaseRecordDTO {
 
 
   constructor(responseRecord: any){
-    this.recordId = responseRecord.Patient.ID?.[0]?.value ?? null;
+    this.recordId = responseRecord.Id
+    this.medicalRecordNumber = responseRecord.Patient.ID?.[0]?.value ?? null;
     this.lastName = responseRecord?.Patient?.Name?.family ?? '';
     this.givenName = responseRecord?.Patient?.Name?.given ?? '';
     this.diagnoses = responseRecord?.Patient?.Diagnosis?.[0] ?? null;

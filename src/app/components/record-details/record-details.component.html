@@ -1,45 +1,88 @@
 <div class="container">
 <div class="top-margin">
-  <button mat-stroked-button>Expand All</button>
-  <button mat-stroked-button>Collapse All</button>
+  <button mat-stroked-button><mat-icon>expand_more</mat-icon>Expand All</button>
+  <button mat-stroked-button style="margin-left: 16px"><mat-icon>expand_less</mat-icon>Collapse All</button>
 </div>
 <div class="top-margin">
+<!--  <div *ngFor="let data of tableData">-->
+<!--    {{data | json}}-->
+<!--    <table>-->
+<!--      <tr>-->
+<!--      <td>{{data.key}}</td>-->
+<!--      <td>{{data.value}}</td>-->
+<!--      </tr>-->
+<!--    </table>-->
+<!--  </div>-->
+  <div *ngFor="let data of tableData?.data">
+    <table style="width: 100%">
+      <tr *ngFor=" let row of data">
+        <td class="title-width">{{ row.key }}</td>
+        <td>{{ row.value || ''}}</td>
+      </tr>
+    </table>
+  </div>
+
 <mat-accordion>
-
-<!--  <mat-expansion-panel hideToggle>-->
+<!--  <mat-expansion-panel *ngFor="let recordDetails of recordDetailsSection" (opened)="recordDetails.expanded" >-->
 <!--    <mat-expansion-panel-header>-->
 <!--      <mat-panel-title>-->
-<!--        This is the expansion title-->
-<!--      </mat-panel-title>-->
-<!--      <mat-panel-description>-->
-<!--        This is a summary of the content-->
-<!--      </mat-panel-description>-->
-<!--    </mat-expansion-panel-header>-->
-<!--    <p>This is the primary content of the panel.</p>-->
-<!--  </mat-expansion-panel>-->
-
-<!--  <mat-expansion-panel (opened)="panelOpenState = true"-->
-<!--                       (closed)="panelOpenState = false">-->
-<!--    <mat-expansion-panel-header>-->
-<!--      <mat-panel-title>-->
-<!--        Self aware panel-->
+<!--        {{ recordDetails.displayName }}-->
 <!--      </mat-panel-title>-->
 <!--      <mat-panel-description>-->
 <!--        Currently I am {{panelOpenState ? 'open' : 'closed'}}-->
 <!--      </mat-panel-description>-->
 <!--    </mat-expansion-panel-header>-->
-<!--    <p>I'm visible because I am open</p>-->
+<!--    <app-record-details-table [tableData]="recordDetails.tableData"></app-record-details-table>-->
 <!--  </mat-expansion-panel>-->
-  <mat-expansion-panel *ngFor="let recordDetails of recordDetailsSection" (opened)="recordDetails.expanded" >
+
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ recordDetails.displayName }}
+       Provider
       </mat-panel-title>
       <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
       </mat-panel-description>
+
     </mat-expansion-panel-header>
-    <app-record-details-table [tableData]="recordDetails.tableData"></app-record-details-table>
+    <div *ngIf="!caseDetails?.Provider?.length">
+      <div style="font-style: italic;">No data to display.</div>
+    </div>
+    <div *ngIf="caseDetails?.Provider?.length> 0">
+      <table style="width: 100%;" *ngFor="let provider of caseDetails.Provider">
+        <tr>
+          <td class="title-width">Name</td>
+          <td>{{provider.Name}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Phone</td>
+          <td>{{provider.Phone}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Address</td>
+          <td>{{provider.Address}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Country</td>
+          <td>{{provider.Country}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Email</td>
+          <td>{{provider.Email}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Facility</td>
+          <td>{{provider.Facility}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">Fax</td>
+          <td>{{provider.Fax}}</td>
+        </tr>
+        <tr>
+          <td class="title-width">ID</td>
+          <td>{{provider.ID?.type}} {{provider.ID?.value}}</td>
+        </tr>
+      </table>
+    </div>
   </mat-expansion-panel>
 
 

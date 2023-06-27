@@ -16,9 +16,9 @@
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z3" style="margin-bottom: 1em">
 
-    <ng-container matColumnDef="recordId">
+    <ng-container matColumnDef="medicalRecordNumber">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Medical Record # </th>
-      <td mat-cell *matCellDef="let record"> {{record.recordId}} </td>
+      <td mat-cell *matCellDef="let record"> {{record.medicalRecordNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
