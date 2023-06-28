@@ -13,8 +13,8 @@ export class SimpleKeyValue{
   key: string;
   value: string;
   constructor(key, value){
-    this.key = key;
-    this.value = value;
+    this.key = key ?? '';
+    this.value = value ?? '';
   }
 }
 
@@ -36,55 +36,18 @@ export class RecordDetailsComponent implements OnInit {
   panelOpenState: boolean;
   expansionPanelData
   tableData: any;
+  providerData: any[];
+  facilityData: any[];
+  personIdentityData: any[];
+  guardianInfo: any[];
+  immunizationHistory: any[];
+  medicationsProvided: any[];
+  labOrderCodes: any[];
 
   recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;
   isLargeScreenMode = true;
   collection = [];
-
-  //This is configuration array for the sections showed
-  recordDetailsSection: RecordDetailsSection[] = [
-    { sortOrder: 0, displayName: "Provider",          expanded: false,
-      tableData: [
-        { keys: ['Provider', 'Name'], label: "Name" },
-        { keys: ['Provider', 'Phone'], label: "Phone" },
-        { keys: ['Provider', 'Country'], label: "Country" },
-        { keys: ['Provider', 'Phone'], label: "Phone" },
-        { keys: ['Provider', 'Email'], label: "Email" },
-        { keys: ['Provider', 'Facility'], label: "Facility" },
-        { keys: ['Provider', 'Fax'], label: "Fax" },
-      ]
-    },
-    { sortOrder: 1, displayName: "Facility",          expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 2, displayName: "Identifying Info",  expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 3, displayName: "Guardian",          expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 4, displayName: "Immunization",      expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 5, displayName: "Dates",             expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 6, displayName: "Diagnostics",       expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 7, displayName: "Medication",        expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 8, displayName: "Lab Results",       expanded: false,
-      tableData:[],
-    },
-    { sortOrder: 9, displayName: "Symptoms",          expanded: false,
-      tableData:[],
-    },
-  ];
-
-
   constructor(
     private route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
@@ -116,77 +79,126 @@ export class RecordDetailsComponent implements OnInit {
     this.caseRecordService.getRecordDetailsById(caseId).subscribe(
       (response: any) => {
         console.log(response);
-        // this.recordDetailsSection.forEach(
-        //   section => section.tableData?.forEach(element => {
-        //     let value = response;
-        //     for (const key of element.keys) {
-        //       value = value[key] ;
-        //     }
-        //     element.value = value || '';
-        //   }));
         this.caseDetails = response;
-        this.getProviderData(response)
+        this.providerData = this.getProviderData(response);
+        this.facilityData = this.getFacilityData(response);
+        this.personIdentityData = this.getIdentityData(response);
+        this.guardianInfo = this.getGuardianInfoData(response);
+        this.immunizationHistory = this.getImmunizationHistory(response);
+        this.medicationsProvided = this.getProvidedMedications(response);
+        this.labOrderCodes = this.getLabOrderCodes(response);
       }
     );
   }
 
+  private getLabOrderCodes(response: any) {
+    //TODO implement
+    return [];
+  }
+  private getProvidedMedications(response: any) {
+    let nestedArrayList = []
+    response['Medication Provided']?.forEach(medication => {
+      let arrayList: any[] = [];
+      for (const key in medication) {
+        if(key == 'Dosage'){
+          const value = `${medication[key]?.Value} ${medication[key]?.Unit}`
+          const object = new SimpleKeyValue(key, value);
+          arrayList.push(object);
+        }
+        else {
+          const object = new SimpleKeyValue(key, medication[key]);
+          arrayList.push(object);
+        }
+      }
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
+  }
+
+  private getImmunizationHistory(response: any) {
+    let nestedArrayList = []
+    response.Immunization_History?.forEach(immunizationRecord => {
+      let arrayList: any[] = [];
+      for (const key in immunizationRecord) {
+        const object = new SimpleKeyValue(key, immunizationRecord[key]);
+        arrayList.push(object);
+      }
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
+  }
+
+  private getGuardianInfoData(response: any) {
+    let nestedArrayList = []
+    response.Parents_Guardians?.forEach(guardian => {
+      let arrayList: any[] = [];
+      for (const key in guardian) {
+          const object = new SimpleKeyValue(key, guardian[key]);
+          arrayList.push(object);
+      }
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
+  }
+
+  getIdentityData(response){
+    const identityDataKeys = ['Birth_Date', 'Death_Date', 'Ethnicity', 'Insurance_Type', 'Name', 'Occupation', 'Race', 'Sex', 'Pregnant', 'PatientClass', 'Street_Address'];
+    let arrayList: any[] = [];
+    const patient = response.Patient;
+    for (const key in response.Patient) {
+      if(identityDataKeys.indexOf(key)!= -1){
+        if(key === 'Name'){
+          const name = `${response.Patient?.[key]?.family}, ${response.Patient?.[key]?.given}`;
+          const object = new SimpleKeyValue(key, name);
+          arrayList.push(object);
+        }
+        else if (key == "Race" || key=="Ethnicity" || key=="Preferred_Language" || key=="Insurance_Type"){
+          let valueStr: string = `Code: ${response.Patient[key]?.Code} | System: ${response.Patient[key]?.System} | Display: ${response.Patient[key]?.Display}`
+          if(!response.Patient[key]?.Code && !response.Patient[key]?.System && !response.Patient[key]?.Display){
+            valueStr = '';
+          }
+          const object = new SimpleKeyValue(key, valueStr);
+          arrayList.push(object);
+        }
+        else {
+          const object = new SimpleKeyValue(key, response.Patient[key]);
+          arrayList.push(object);
+        }
+      }
+    }
+    return arrayList;
+  }
+
+  getFacilityData(response){
+    let arrayList: any[] = [];
+    const facility = response.Facility;
+    for (const key in response.Facility) {
+      const object = new SimpleKeyValue(key, facility[key]);
+      arrayList.push(object);
+    }
+    return arrayList;
+  }
+
   getProviderData(response) {
     let nestedArrayList = []
-    console.log()
-    delete response.Id;
-    for (const key in response) {
-      // console.log(key);
-      // console.log(response[key]);
-      if (key === "Patient") {
-        for (const key in response.Patient) {
-          response[key] = response.Patient[key]
+     response.Provider?.forEach(provider => {
+      let arrayList: any[] = [];
+      for (const key in provider) {
+        if(key != 'ID'){
+          const object = new SimpleKeyValue(key, provider[key]);
+          arrayList.push(object);
+        }
+        else {
+          const value = `${provider[key]?.type} ${provider[key]?.value}`
+          const object = new SimpleKeyValue(key, value);
+          arrayList.push(object);
         }
       }
-      if (!Array.isArray(response[key])) {
-        let array: any[] = [];
-        array.push(response[key])
-        response[key] = array;
-      }
-      response[key]?.forEach(provider => {
-     //   console.log(key);
-        let arrayList: any[] = [];
-        for (const key in provider) {
-          if (key == 'ID') {
-            const value = `${provider[key]?.type} ${provider[key]?.value}`
-            const object = new SimpleKeyValue(key, value);
-            arrayList.push(object);
-          } else {
-            const object = new SimpleKeyValue(key, provider[key]);
-            arrayList.push(object);
-          }
-
-        }
-        console.log(arrayList)
-        nestedArrayList.push(arrayList);
-        // console.log(key);
-        this.tableData = {data: nestedArrayList, expanded: false, title: key};
-
-      });
-      console.log(this.tableData);
-    }
-    // response.Provider.forEach(provider => {
-    //   let arrayList: any[] = [];
-    //   for (const key in provider) {
-    //     if(key != 'ID'){
-    //       const object = new SimpleKeyValue(key, provider[key]);
-    //       arrayList.push(object);
-    //     }
-    //     else {
-    //       const value = `${provider[key]?.type} ${provider[key]?.value}`
-    //       const object = new SimpleKeyValue(key, value);
-    //       arrayList.push(object);
-    //     }
-    //   }
-    //   nestedArrayList.push(arrayList);
-    //   this.tableData = {data:nestedArrayList, expanded: false, title: 'Provider'};
-    // });
-
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
   }
+
 
   scroll(element: HTMLDivElement) {
     element.scrollIntoView();
@@ -195,4 +207,5 @@ export class RecordDetailsComponent implements OnInit {
   onViewRecordHistory() {
     this.router.navigate(['/record-history', this.recordId]);
   }
+
 }

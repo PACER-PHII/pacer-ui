@@ -1,19 +1,150 @@
 <div class="container">
+  <div class="top-margin">
+    <div class="top-margin">
+      <button mat-stroked-button><mat-icon>expand_more</mat-icon>Expand All</button>
+      <button mat-stroked-button style="margin-left: 16px"><mat-icon>expand_less</mat-icon>Collapse All</button>
+    </div>
+    <div class="top-margin">
+    <mat-accordion>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Providers
+          </mat-panel-title>
+          <mat-panel-description>
+            Providers Description
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let data of providerData">
+          <table>
+            <tr *ngFor=" let row of data">
+              <td class="title-width">{{ row.key }}</td>
+              <td>{{ row.value || ''}}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Facility
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <table style="width: 100%">
+          <tr *ngFor=" let row of facilityData">
+            <td class="title-width">{{ row.key }}</td>
+            <td>{{ row.value || ''}}</td>
+          </tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Identifying Info
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <table style="width: 100%">
+          <tr *ngFor=" let row of personIdentityData">
+            <td class="title-width">{{ row.key }}</td>
+            <td>{{ row.value || ''}}</td>
+          </tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Guardians Info
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let data of guardianInfo">
+          <table>
+            <tr *ngFor=" let row of data">
+              <td class="title-width">{{ row.key }}</td>
+              <td>{{ row.value || ''}}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Immunization History
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let data of immunizationHistory">
+          <table>
+            <tr *ngFor=" let row of data">
+              <td class="title-width">{{ row.key }}</td>
+              <td>{{ row.value || ''}}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Medications Provided
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let data of medicationsProvided">
+          <table>
+            <tr *ngFor=" let row of data">
+              <td class="title-width">{{ row.key }}</td>
+              <td>{{ row.value || ''}}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+
+    </mat-accordion>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="container">
 <div class="top-margin">
   <button mat-stroked-button><mat-icon>expand_more</mat-icon>Expand All</button>
   <button mat-stroked-button style="margin-left: 16px"><mat-icon>expand_less</mat-icon>Collapse All</button>
 </div>
 <div class="top-margin">
-<!--  <div *ngFor="let data of tableData">-->
-<!--    {{data | json}}-->
-<!--    <table>-->
-<!--      <tr>-->
-<!--      <td>{{data.key}}</td>-->
-<!--      <td>{{data.value}}</td>-->
-<!--      </tr>-->
-<!--    </table>-->
-<!--  </div>-->
-  <div *ngFor="let data of tableData?.data">
+&lt;!&ndash;  <div *ngFor="let data of tableData">&ndash;&gt;
+&lt;!&ndash;    {{data | json}}&ndash;&gt;
+&lt;!&ndash;    <table>&ndash;&gt;
+&lt;!&ndash;      <tr>&ndash;&gt;
+&lt;!&ndash;      <td>{{data.key}}</td>&ndash;&gt;
+&lt;!&ndash;      <td>{{data.value}}</td>&ndash;&gt;
+&lt;!&ndash;      </tr>&ndash;&gt;
+&lt;!&ndash;    </table>&ndash;&gt;
+&lt;!&ndash;  </div>&ndash;&gt;
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Provider
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+
+    </mat-expansion-panel-header>
+  <div *ngFor="let data of providerData">
     <table style="width: 100%">
       <tr *ngFor=" let row of data">
         <td class="title-width">{{ row.key }}</td>
@@ -21,76 +152,95 @@
       </tr>
     </table>
   </div>
-
-<mat-accordion>
-<!--  <mat-expansion-panel *ngFor="let recordDetails of recordDetailsSection" (opened)="recordDetails.expanded" >-->
-<!--    <mat-expansion-panel-header>-->
-<!--      <mat-panel-title>-->
-<!--        {{ recordDetails.displayName }}-->
-<!--      </mat-panel-title>-->
-<!--      <mat-panel-description>-->
-<!--        Currently I am {{panelOpenState ? 'open' : 'closed'}}-->
-<!--      </mat-panel-description>-->
-<!--    </mat-expansion-panel-header>-->
-<!--    <app-record-details-table [tableData]="recordDetails.tableData"></app-record-details-table>-->
-<!--  </mat-expansion-panel>-->
+  </mat-expansion-panel>
 
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-       Provider
+        Facility Data
       </mat-panel-title>
       <mat-panel-description>
       </mat-panel-description>
 
     </mat-expansion-panel-header>
-    <div *ngIf="!caseDetails?.Provider?.length">
-      <div style="font-style: italic;">No data to display.</div>
-    </div>
-    <div *ngIf="caseDetails?.Provider?.length> 0">
-      <table style="width: 100%;" *ngFor="let provider of caseDetails.Provider">
-        <tr>
-          <td class="title-width">Name</td>
-          <td>{{provider.Name}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Phone</td>
-          <td>{{provider.Phone}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Address</td>
-          <td>{{provider.Address}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Country</td>
-          <td>{{provider.Country}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Email</td>
-          <td>{{provider.Email}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Facility</td>
-          <td>{{provider.Facility}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">Fax</td>
-          <td>{{provider.Fax}}</td>
-        </tr>
-        <tr>
-          <td class="title-width">ID</td>
-          <td>{{provider.ID?.type}} {{provider.ID?.value}}</td>
+      <table style="width: 100%">
+        <tr *ngFor=" let row of facilityData">
+          <td class="title-width">{{ row.key }}</td>
+          <td>{{ row.value || ''}}</td>
         </tr>
       </table>
-    </div>
   </mat-expansion-panel>
+
+
+<mat-accordion>
+&lt;!&ndash;  <mat-expansion-panel *ngFor="let recordDetails of recordDetailsSection" (opened)="recordDetails.expanded" >&ndash;&gt;
+&lt;!&ndash;    <mat-expansion-panel-header>&ndash;&gt;
+&lt;!&ndash;      <mat-panel-title>&ndash;&gt;
+&lt;!&ndash;        {{ recordDetails.displayName }}&ndash;&gt;
+&lt;!&ndash;      </mat-panel-title>&ndash;&gt;
+&lt;!&ndash;      <mat-panel-description>&ndash;&gt;
+&lt;!&ndash;        Currently I am {{panelOpenState ? 'open' : 'closed'}}&ndash;&gt;
+&lt;!&ndash;      </mat-panel-description>&ndash;&gt;
+&lt;!&ndash;    </mat-expansion-panel-header>&ndash;&gt;
+&lt;!&ndash;    <app-record-details-table [tableData]="recordDetails.tableData"></app-record-details-table>&ndash;&gt;
+&lt;!&ndash;  </mat-expansion-panel>&ndash;&gt;
+
+&lt;!&ndash;  <mat-expansion-panel>&ndash;&gt;
+&lt;!&ndash;    <mat-expansion-panel-header>&ndash;&gt;
+&lt;!&ndash;      <mat-panel-title>&ndash;&gt;
+&lt;!&ndash;       Provider&ndash;&gt;
+&lt;!&ndash;      </mat-panel-title>&ndash;&gt;
+&lt;!&ndash;      <mat-panel-description>&ndash;&gt;
+&lt;!&ndash;      </mat-panel-description>&ndash;&gt;
+
+&lt;!&ndash;    </mat-expansion-panel-header>&ndash;&gt;
+&lt;!&ndash;    <div *ngIf="!caseDetails?.Provider?.length">&ndash;&gt;
+&lt;!&ndash;      <div style="font-style: italic;">No data to display.</div>&ndash;&gt;
+&lt;!&ndash;    </div>&ndash;&gt;
+&lt;!&ndash;    <div *ngIf="caseDetails?.Provider?.length> 0">&ndash;&gt;
+&lt;!&ndash;      <table style="width: 100%;" *ngFor="let provider of caseDetails.Provider">&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Name</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Name}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Phone</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Phone}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Address</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Address}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Country</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Country}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Email</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Email}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Facility</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Facility}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">Fax</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.Fax}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;        <tr>&ndash;&gt;
+&lt;!&ndash;          <td class="title-width">ID</td>&ndash;&gt;
+&lt;!&ndash;          <td>{{provider.ID?.type}} {{provider.ID?.value}}</td>&ndash;&gt;
+&lt;!&ndash;        </tr>&ndash;&gt;
+&lt;!&ndash;      </table>&ndash;&gt;
+&lt;!&ndash;    </div>&ndash;&gt;
+&lt;!&ndash;  </mat-expansion-panel>&ndash;&gt;
 
 
 </mat-accordion>
 </div>
 
 
-<!--
+&lt;!&ndash;
 <mat-sidenav-container [hasBackdrop]=false fullscreen>
 
   <mat-sidenav #sidenav mode="over">
@@ -568,5 +718,6 @@
 
   </div>
 </mat-sidenav-container>
--->
+&ndash;&gt;
 </div>
+-->
