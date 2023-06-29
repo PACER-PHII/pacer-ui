@@ -27,7 +27,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecordHistoryComponent } from './components/record-history/record-history.component';
 import { PersonInfoComponent } from './components/person-info/person-info.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { RecordDetailsTableComponent } from './components/record-details-table/record-details-table.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -36,7 +36,6 @@ import { RecordDetailsTableComponent } from './components/record-details-table/r
     RecordDetailsComponent,
     RecordHistoryComponent,
     PersonInfoComponent,
-    RecordDetailsTableComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +59,8 @@ import { RecordDetailsTableComponent } from './components/record-details-table/r
     MatTabsModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

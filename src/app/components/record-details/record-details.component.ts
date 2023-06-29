@@ -1,13 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordService} from "../../service/case-record.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-
-export interface TableValues{
-  keys: string[];
-  label: string;
-  value?: string;
-}
+import {MatAccordion} from "@angular/material/expansion";
 
 export class SimpleKeyValue{
   key: string;
@@ -18,13 +13,6 @@ export class SimpleKeyValue{
   }
 }
 
-export interface RecordDetailsSection{
-  sortOrder: number;
-  displayName: string;
-  expanded: boolean;
-  tableData: TableValues[];
-}
-
 @Component({
   selector: 'app-record-details',
   templateUrl: './record-details.component.html',
@@ -32,22 +20,22 @@ export interface RecordDetailsSection{
 })
 
 export class RecordDetailsComponent implements OnInit {
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  panelOpenState: boolean;
-  expansionPanelData
-  tableData: any;
   providerData: any[];
   facilityData: any[];
   personIdentityData: any[];
   guardianInfo: any[];
   immunizationHistory: any[];
   medicationsProvided: any[];
-  labOrderCodes: any[];
+  labOrders: any[];
+  symptoms: any[];
+  travelHistory: any[];
 
   recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;
   isLargeScreenMode = true;
-  collection = [];
+  readonly NO_DATA_TO_DISPLAY = "No data to display."
   constructor(
     private route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
@@ -78,7 +66,6 @@ export class RecordDetailsComponent implements OnInit {
   getCaseDetails(caseId: number): void{
     this.caseRecordService.getRecordDetailsById(caseId).subscribe(
       (response: any) => {
-        console.log(response);
         this.caseDetails = response;
         this.providerData = this.getProviderData(response);
         this.facilityData = this.getFacilityData(response);
@@ -86,13 +73,41 @@ export class RecordDetailsComponent implements OnInit {
         this.guardianInfo = this.getGuardianInfoData(response);
         this.immunizationHistory = this.getImmunizationHistory(response);
         this.medicationsProvided = this.getProvidedMedications(response);
-        this.labOrderCodes = this.getLabOrderCodes(response);
+        this.labOrders = this.getLabOrder(response);
+        this.symptoms = this.getSymptoms(response);
+        this.travelHistory = this.getTravelHistory(response);
       }
     );
   }
 
-  private getLabOrderCodes(response: any) {
-    //TODO implement
+  private getTravelHistory(response: any) {
+    let nestedArrayList = []
+    response['Travel_History']?.forEach(historyRecord => {
+      let arrayList: any[] = [];
+      for (const key in historyRecord) {
+        const object = new SimpleKeyValue(key, historyRecord[key]);
+        arrayList.push(object);
+      }
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
+  }
+
+  private getSymptoms(response: any) {
+    let nestedArrayList = []
+    response['Symptoms']?.forEach(symptom => {
+      let arrayList: any[] = [];
+      for (const key in symptom) {
+        const object = new SimpleKeyValue(key, symptom[key]);
+        arrayList.push(object);
+      }
+      nestedArrayList.push(arrayList);
+    });
+    return nestedArrayList;
+  }
+
+  private getLabOrder(response: any) {
+    //TODO implement a parser when we know the meaning of the data.
     return [];
   }
   private getProvidedMedications(response: any) {
