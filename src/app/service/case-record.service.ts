@@ -3,17 +3,18 @@ import {Observable, map} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CaseRecordDTO} from "../domain/case-record-dto";
+import {UtilsService} from "./utils.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CaseRecordService {
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient, private utilsService: UtilsService ) { }
 
   getCaseRecordsList():  Observable<CaseRecordDTO[]> {
     return this.http.get(environment.apiUrl + '/ecr-manager/ECR').pipe(map((resultList: any) =>
-        resultList.map(result => new CaseRecordDTO(result))
+        resultList.map(result => new CaseRecordDTO(result, this.utilsService))
       ),
     );
   };

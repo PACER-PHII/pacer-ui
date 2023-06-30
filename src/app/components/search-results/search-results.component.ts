@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['medicalRecordNumber', 'diagnoses', 'lastName', 'givenName', 'dob', 'gender', 'status', 'actions'];
+  displayedColumns: string[] = ['medicalRecordNumber', 'diagnosis', 'lastName', 'givenName', 'dob', 'gender', 'status', 'actions'];
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource: MatTableDataSource<CaseRecordDTO>;
