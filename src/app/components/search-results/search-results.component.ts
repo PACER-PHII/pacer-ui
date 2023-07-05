@@ -7,6 +7,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
 import {CaseRecordDTO} from "../../domain/case-record-dto";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-search-results',
@@ -22,11 +23,13 @@ export class SearchResultsComponent implements OnInit {
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource: MatTableDataSource<CaseRecordDTO>;
+  isLargeScreenMode: boolean = true;
 
   constructor(
     private caseServiceRecordService: CaseRecordService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private responsive: BreakpointObserver
   ) { }
 
   getCaseRecords(): void {
@@ -55,6 +58,22 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCaseRecords();
+    console.log(this.responsive);
+    this.responsive.observe([
+      Breakpoints.Handset,
+      Breakpoints.Tablet,
+      Breakpoints.Medium,
+      Breakpoints.Small,
+    ])
+      .subscribe(result => {
+        console.log("value changed");
+        this.isLargeScreenMode = true;
+
+        if (result.matches) {
+          this.isLargeScreenMode = false;
+        }
+
+      });
   }
 
   onViewCases(record: any) {
@@ -78,8 +97,11 @@ export class SearchResultsComponent implements OnInit {
     this.router.navigate(['/record-history', record.recordId]);
   }
 
-
   onQueryRecord(record) {
     //TODO Implement Action
+  }
+
+  onViewHistory(record) {
+    this.router.navigate(['/record-history', record.recordId]);
   }
 }

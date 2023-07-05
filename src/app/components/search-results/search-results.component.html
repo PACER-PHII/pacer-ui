@@ -56,22 +56,37 @@
       <th mat-header-cell *matHeaderCellDef> Actions</th>
       <td mat-cell *matCellDef="let record">
         <span style="margin-right: 4px">
-          <button mat-stroked-button
-                  (click)="onViewCases(record);  $event.stopPropagation()"
+          <button mat-stroked-button *ngIf="isLargeScreenMode"
+                  (click)="onViewCases(record)"
                   color="primary"><mat-icon>table_view</mat-icon>
             Details
           </button>
+          <button *ngIf="!isLargeScreenMode" mat-icon-button color="primary"
+                  (click)="onViewCases(record)" aria-label="View Details"
+                  matTooltip="View Details">
+            <mat-icon>table_view</mat-icon>
+          </button>
         </span>
         <span style="margin-right: 4px">
-          <button mat-stroked-button
-                  (click)="onShowHistory(record);  $event.stopPropagation()">
+          <button mat-stroked-button *ngIf="isLargeScreenMode" (click)="onViewHistory(record)">
             <mat-icon>history</mat-icon>History
+          </button>
+          <button *ngIf="!isLargeScreenMode" mat-icon-button
+                  (click)="onViewHistory(record)" aria-label="View History"
+                  matTooltip="View History">
+            <mat-icon>history</mat-icon>
           </button>
         </span>
         <span>
-          <button mat-stroked-button (click)="onQueryRecord(record);  $event.stopPropagation()" color="warn">
-            <mat-icon>settings</mat-icon>
+          <button *ngIf="isLargeScreenMode" mat-stroked-button
+                  (click)="onQueryRecord(record)" color="warn">
+            <mat-icon>sync</mat-icon>
             Query
+          </button>
+          <button *ngIf="!isLargeScreenMode" mat-icon-button color="warn"
+                  (click)="onQueryRecord(record)" aria-label="Query Record"
+                  matTooltip="Query Record">
+            <mat-icon>sync</mat-icon>
           </button>
         </span>
       </td>
@@ -79,10 +94,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row;
-        columns: displayedColumns;"
-        (click)="onViewCases(row)">
-    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>

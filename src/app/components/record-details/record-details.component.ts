@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordService} from "../../service/case-record.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MatAccordion} from "@angular/material/expansion";
-import {CaseRecordDTO} from "../../domain/case-record-dto";
 import {UtilsService} from "../../service/utils.service";
 import {PersonInfo} from "../../domain/person-info";
 import {PersonInfoService} from "../../service/person-info.service";
@@ -43,7 +42,7 @@ export class RecordDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
-    private responsive: BreakpointObserver,
+    private breakpointObserver: BreakpointObserver,
     private router: Router,
     private utilsService: UtilsService,
     private personInfoService: PersonInfoService
@@ -52,20 +51,14 @@ export class RecordDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getCaseRecordDetails(this.recordId);
 
-    this.responsive.observe([
+    this.breakpointObserver.observe([
       Breakpoints.Handset,
       Breakpoints.Tablet,
       Breakpoints.Medium,
       Breakpoints.Small,
     ])
       .subscribe(result => {
-
-        this.isLargeScreenMode = true;
-
-        if (result.matches) {
-          this.isLargeScreenMode = false;
-        }
-
+        this.isLargeScreenMode = !result.matches;
       });
   }
 
