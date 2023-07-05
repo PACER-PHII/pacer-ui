@@ -34,4 +34,7 @@ export class RecordHistoryComponent implements OnInit {
       });
   }
 
+  onQueryRecord() {
+
+  }
 }

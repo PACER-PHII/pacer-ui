@@ -58,7 +58,6 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onViewCases(record: any) {
-    console.log(record);
     this.router.navigate(['/record-details', record.recordId]);
   }
 
@@ -76,8 +75,9 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onShowHistory(record: CaseRecordDTO) {
-    //TODO Implement Action
+    this.router.navigate(['/record-history', record.recordId]);
   }
+
 
   onQueryRecord(record) {
     //TODO Implement Action

@@ -1,5 +1,6 @@
-<div class="container" style="margin-top: 10vh">
-  <div class="box align-center">
+<div class="container" style="margin-top: 8vh">
+  <div class="box page-title">Search Records</div>
+  <div class="box align-center top-margin">
     <div style="width: 50%">
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Filter Results</mat-label>
@@ -71,7 +72,8 @@
           <button mat-stroked-button (click)="onQueryRecord(record);  $event.stopPropagation()" color="warn">
             <mat-icon>settings</mat-icon>
             Query
-          </button></span>
+          </button>
+        </span>
       </td>
       <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
     </ng-container>

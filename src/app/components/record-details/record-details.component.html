@@ -1,9 +1,15 @@
 <app-person-info></app-person-info>
 <div class="container">
   <div class="top-margin">
-    <div class="top-margin">
+    <div class="box page-title">Record Details</div>
+    <div class="top-margin box">
       <button mat-stroked-button (click)="accordion.openAll()"><mat-icon>expand_more</mat-icon>Expand All</button>
       <button mat-stroked-button style="margin-left: 16px" (click)="accordion.closeAll()"><mat-icon>expand_less</mat-icon>Collapse All</button>
+      <span class="content-spacer"></span>
+      <button mat-raised-button (click)="onQueryRecord();  $event.stopPropagation()" color="warn">
+        <mat-icon>settings</mat-icon>
+        Query Record
+      </button>
     </div>
     <div class="top-margin">
     <mat-accordion multi>

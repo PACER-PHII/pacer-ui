@@ -231,4 +231,7 @@ export class RecordDetailsComponent implements OnInit {
     this.router.navigate(['/record-history', this.recordId]);
   }
 
+  onQueryRecord() {
+
+  }
 }

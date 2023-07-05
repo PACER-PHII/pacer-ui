@@ -1,18 +1,18 @@
 <mat-toolbar>
   <div class="box-columns">
+
     <div class="box">
       <div class="box-colum left-align">
         <div>Patient: {{ personInfo?.givenName }} {{ personInfo?.lastName }}</div>
-        <div> Medical Record #: {{ personInfo?.recordId }}</div>
+        <div> Medical Record # {{ personInfo?.recordId }}</div>
       </div>
     </div>
-
 
     <div class="box">
 
       <div class="box-colum right-align">
-        <div class="demographic-label">Diagnosis:</div>
-        <div class="demographic-label">Status:</div>
+        <div class="demographic-label">Diagnosis: </div>
+        <div class="demographic-label">Status: </div>
       </div>
       <div class="box-colum left-align">
         <div class="demographic-info">{{ personInfo?.diagnosis }}</div>
@@ -29,14 +29,13 @@
       </div>
 
       <div class="box-colum right-align">
-        <div class="demographic-label">Insurance:</div>
-        <div class="demographic-label">Address:</div>
+        <div class="demographic-label">Insurance: </div>
+        <div class="demographic-label">Address: </div>
       </div>
       <div class="box-colum left-align">
-        <div class="demographic-info"> Needs data </div>
-        <div class="demographic-info">{{ personInfo?.streetAddress}}</div>
+        <div class="demographic-info">Needs data </div>
+        <div class="demographic-info">{{ personInfo?.streetAddress }}</div>
       </div>
-
 
     </div>
 
