@@ -3,7 +3,6 @@ import {AdministrativeSex} from "./admnistrative-sex";
 import {UtilsService} from "../service/utils.service";
 
 export class PersonInfo {
-  recordId: number;
   medicalRecordNumber: number | null;
   lastName: string;
   givenName: string;

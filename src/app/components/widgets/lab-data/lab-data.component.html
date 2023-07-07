@@ -1,0 +1,50 @@
+<div *ngFor=" let labOrder of labOrders">
+  <mat-card class="top-margin">
+    <mat-card-content>
+      <div>
+        <span style="margin-right: 16px">{{ labOrder.Display }}</span>
+        <span style="margin-right: 16px"> {{ labOrder.Value }} </span>
+        <span style="margin-right: 16px">Code: {{ labOrder.Code }}</span>
+        <span style="margin-right: 16px">Date: {{ labOrder.Date | date}}</span>
+      </div>
+
+      <div class="top-margin">
+        Lab Results
+        <table>
+          <thead>
+          <tr>
+            <th *ngFor="let item of labOrder?.labResults?.[0]">{{ item.key }}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of labOrder?.labResults">
+            <td *ngFor="let item of row">{{ item.value  | dateValue }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="top-margin">
+        Facility
+        <table>
+          <tr *ngFor=" let row of labOrder.facility">
+            <td class="title-width">{{ row.key }}</td>
+            <td>{{ row.value || ''}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="top-margin">
+        Provider
+        <table>
+          <tr *ngFor=" let row of labOrder.provider">
+            <td class="title-width">{{ row.key }}</td>
+            <td>{{ row.value || ''}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+

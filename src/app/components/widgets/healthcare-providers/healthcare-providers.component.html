@@ -1,0 +1,9 @@
+<div *ngIf="!providersData?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+<div *ngFor="let data of providersData">
+  <table>
+    <tr *ngFor=" let row of data">
+      <td class="title-width">{{ row.key }}</td>
+      <td>{{ row.value || ''}}</td>
+    </tr>
+  </table>
+</div>

@@ -28,6 +28,15 @@ import { RecordHistoryComponent } from './components/record-history/record-histo
 import { PersonInfoComponent } from './components/person-info/person-info.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { IdentityInfoComponent } from './components/widgets/identity-info/identity-info.component';
+import { HealthcareProvidersComponent } from './components/widgets/healthcare-providers/healthcare-providers.component';
+import {AppConstants} from "./providers/app-constants";
+import { FacilityDataComponent } from './components/widgets/facility-data/facility-data.component';
+import { GuardiansInfoComponent } from './components/widgets/guardians-info/guardians-info.component';
+import { ImmunizationHistoryComponent } from './components/widgets/immunization-history/immunization-history.component';
+import { MedicationsProvidedComponent } from './components/widgets/medications-provided/medications-provided.component';
+import { LabDataComponent } from './components/widgets/lab-data/lab-data.component';
+import {DateValuePipe} from "./pipes/date-value.pipe";
 
 @NgModule({
   declarations: [
@@ -36,6 +45,14 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     RecordDetailsComponent,
     RecordHistoryComponent,
     PersonInfoComponent,
+    IdentityInfoComponent,
+    HealthcareProvidersComponent,
+    FacilityDataComponent,
+    GuardiansInfoComponent,
+    ImmunizationHistoryComponent,
+    MedicationsProvidedComponent,
+    LabDataComponent,
+    DateValuePipe
   ],
   imports: [
     BrowserModule,
@@ -62,7 +79,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatExpansionModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [AppConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

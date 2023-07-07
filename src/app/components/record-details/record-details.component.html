@@ -2,6 +2,7 @@
 <div class="container">
   <div class="top-margin">
     <div class="box page-title">Record Details</div>
+
     <div class="top-margin box">
       <button mat-stroked-button (click)="accordion.openAll()"><mat-icon>expand_more</mat-icon>Expand All</button>
       <button mat-stroked-button style="margin-left: 16px" (click)="accordion.closeAll()"><mat-icon>expand_less</mat-icon>Collapse All</button>
@@ -20,18 +21,9 @@
             Providers
           </mat-panel-title>
           <mat-panel-description>
-            Providers Description
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!providerData?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of providerData">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        <app-healthcare-providers [recordDetails]="caseDetails"></app-healthcare-providers>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -42,13 +34,18 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!facilityData?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <table>
-          <tr *ngFor=" let row of facilityData">
-            <td class="title-width">{{ row.key }}</td>
-            <td>{{ row.value || ''}}</td>
-          </tr>
-        </table>
+        <app-facility-data [recordDetails]="caseDetails"></app-facility-data>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Notes
+          </mat-panel-title>
+          <mat-panel-description>
+            Not implemented - no data
+          </mat-panel-description>
+        </mat-expansion-panel-header>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -59,12 +56,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <table>
-          <tr *ngFor=" let row of personIdentityData">
-            <td class="title-width">{{ row.key }}</td>
-            <td>{{ row.value || ''}}</td>
-          </tr>
-        </table>
+        <app-identity-info [recordDetails]="caseDetails"></app-identity-info>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -75,15 +67,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!guardianInfo?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of guardianInfo">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        <app-guardians-info [recordDetails]="caseDetails"></app-guardians-info>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -94,15 +78,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!immunizationHistory?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of immunizationHistory">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        <app-immunization-history [recordDetails]="caseDetails"></app-immunization-history>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -113,56 +89,41 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!medicationsProvided?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of medicationsProvided">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        <app-medications-provided  [recordDetails]="caseDetails"></app-medications-provided>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
-        <!--TODO We need to remove this code and write a proper parser when we know what data we need to parse to the user.-->
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Lab Orders
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-lab-data  [recordDetails]="caseDetails"></app-lab-data>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Lab Test Performed
+          </mat-panel-title>
+          <mat-panel-description>
+            Not Implemented - no data
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Lab Results
           </mat-panel-title>
           <mat-panel-description>
+            Not Implemented - no data
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!caseDetails?.Patient['Lab_Order_Code']?.length">
-          <div style="font-style: italic;">No data to display.</div>
-        </div>
-        <div class="top-spacer" *ngFor="let lab of caseDetails?.Patient['Lab_Order_Code']">
-          {{lab.Display}}
-          <div>
-            <table style="width: 100%">
-              <thead>
-              <tr>
-                <th>System:Code</th>
-                <th>Date</th>
-                <th>Display</th>
-                <th>Unit</th>
-                <th>Value</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let result of lab.Laboratory_Results">
-                <td>{{result.System}}:{{result.Code}}</td>
-                <td>{{result.Date}}</td>
-                <td>{{result.Display}}</td>
-                <td>{{result.Unit.Code}}</td>
-                <td>
-                  {{result.Value}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        Not Implemented
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -171,17 +132,10 @@
             Symptoms
           </mat-panel-title>
           <mat-panel-description>
+            Not Implemented - no data
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!symptoms?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of symptoms">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        Not Implemented
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -190,17 +144,10 @@
             Travel History
           </mat-panel-title>
           <mat-panel-description>
+            Not Implemented - no data
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngIf="!travelHistory?.length">{{NO_DATA_TO_DISPLAY}}</div>
-        <div *ngFor="let data of travelHistory">
-          <table>
-            <tr *ngFor=" let row of data">
-              <td class="title-width">{{ row.key }}</td>
-              <td>{{ row.value || ''}}</td>
-            </tr>
-          </table>
-        </div>
+        Not Implemented
       </mat-expansion-panel>
 
     </mat-accordion>

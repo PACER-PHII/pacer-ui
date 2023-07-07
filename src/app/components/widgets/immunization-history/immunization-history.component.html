@@ -1,0 +1,9 @@
+<div *ngIf="!immunizationHistory?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+<div *ngFor="let data of immunizationHistory">
+  <table>
+    <tr *ngFor=" let row of data">
+      <td class="title-width">{{ row.key }}</td>
+      <td>{{ row.value || ''}}</td>
+    </tr>
+  </table>
+</div>
