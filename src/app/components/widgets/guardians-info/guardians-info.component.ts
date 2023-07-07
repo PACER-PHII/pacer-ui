@@ -5,7 +5,7 @@ import {AppConstants} from "../../../providers/app-constants";
 @Component({
   selector: 'app-guardians-info',
   templateUrl: './guardians-info.component.html',
-  styleUrls: ['./guardians-info.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./guardians-info.component.scss', '../../record-details/record-details.component.scss']
 })
 export class GuardiansInfoComponent implements OnChanges{
   @Input() recordDetails: any;

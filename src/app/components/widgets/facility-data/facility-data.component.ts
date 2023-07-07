@@ -5,7 +5,7 @@ import {AppConstants} from "../../../providers/app-constants";
 @Component({
   selector: 'app-facility-data',
   templateUrl: './facility-data.component.html',
-  styleUrls: ['./facility-data.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./facility-data.component.scss', '../../record-details/record-details.component.scss']
 })
 export class FacilityDataComponent implements OnChanges {
   @Input() recordDetails: any;

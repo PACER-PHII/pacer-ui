@@ -5,7 +5,7 @@ import {SimpleKeyValue} from "../../record-details/record-details.component";
 @Component({
   selector: 'app-medications-provided',
   templateUrl: './medications-provided.component.html',
-  styleUrls: ['./medications-provided.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./medications-provided.component.scss', '../../record-details/record-details.component.scss']
 })
 export class MedicationsProvidedComponent implements OnChanges{
   @Input() recordDetails: any;

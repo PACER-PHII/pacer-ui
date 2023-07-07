@@ -56,6 +56,8 @@ export class RecordDetailsComponent implements OnInit {
     this.caseRecordService.getRecordDetailsById(caseId).subscribe(
       (response: any) => {
         this.caseDetails = response;
+
+        //TODO: Remove hardcoded data. It was added for testing purpose
         this.caseDetails["Medication Provided"] = [
           {
             "Code": "141962",
@@ -90,7 +92,23 @@ export class RecordDetailsComponent implements OnInit {
             "Date": "Thu Mar 27 00:00:00 UTC 2200",
             "Frequency": ""
           }
-        ]
+        ];
+        this.caseDetails["Diagnosis"] = [
+          {
+            "Code": "105629000",
+            "System": "urn:oid:2.16.840.1.113883.6.96",
+            "Display": "",
+            "Date": "Thu Mar 27 00:00:00 UTC 2200"
+          }
+        ];
+        this.caseDetails["Symptoms"] = [
+          {
+            "Code": "105629000",
+            "System": "urn:oid:2.16.840.1.113883.6.96",
+            "Display": "",
+          }
+        ];
+
         const personInfo = new PersonInfo(response, this.utilsService);
         this.personInfoService.setPersonInfo(personInfo);
       }

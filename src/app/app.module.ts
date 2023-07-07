@@ -37,6 +37,8 @@ import { ImmunizationHistoryComponent } from './components/widgets/immunization-
 import { MedicationsProvidedComponent } from './components/widgets/medications-provided/medications-provided.component';
 import { LabDataComponent } from './components/widgets/lab-data/lab-data.component';
 import {DateValuePipe} from "./pipes/date-value.pipe";
+import { DiagnosisComponent } from './components/widgets/diagnosis/diagnosis.component';
+import { SymptomsComponent } from './components/widgets/symptoms/symptoms.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import {DateValuePipe} from "./pipes/date-value.pipe";
     ImmunizationHistoryComponent,
     MedicationsProvidedComponent,
     LabDataComponent,
-    DateValuePipe
+    DateValuePipe,
+    DiagnosisComponent,
+    SymptomsComponent
   ],
   imports: [
     BrowserModule,

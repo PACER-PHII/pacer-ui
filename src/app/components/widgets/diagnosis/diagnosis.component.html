@@ -1,0 +1,14 @@
+<div *ngIf="!diagnosis?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+<table>
+  <thead>
+  <tr>
+    <th *ngFor="let item of diagnosis?.[0]">{{ item.key }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of diagnosis">
+    <td *ngFor="let item of row">{{ item.value  | dateValue }}</td>
+  </tr>
+  </tbody>
+</table>
+

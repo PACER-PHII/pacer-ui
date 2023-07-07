@@ -5,7 +5,7 @@ import {AppConstants} from "../../../providers/app-constants";
 @Component({
   selector: 'app-healthcare-providers',
   templateUrl: './healthcare-providers.component.html',
-  styleUrls: ['./healthcare-providers.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./healthcare-providers.component.scss', '../../record-details/record-details.component.scss']
 })
 export class HealthcareProvidersComponent implements OnChanges {
   @Input() recordDetails: any;

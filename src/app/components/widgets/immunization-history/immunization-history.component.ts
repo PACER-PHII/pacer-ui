@@ -5,7 +5,7 @@ import {SimpleKeyValue} from "../../record-details/record-details.component";
 @Component({
   selector: 'app-immunization-history',
   templateUrl: './immunization-history.component.html',
-  styleUrls: ['./immunization-history.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./immunization-history.component.scss', '../../record-details/record-details.component.scss']
 })
 export class ImmunizationHistoryComponent implements OnChanges{
   @Input() recordDetails: any;

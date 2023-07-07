@@ -5,7 +5,7 @@ import {SimpleKeyValue} from "../../record-details/record-details.component";
 @Component({
   selector: 'app-lab-data',
   templateUrl: './lab-data.component.html',
-  styleUrls: ['./lab-data.component.css', '../../record-details/record-details.component.scss']
+  styleUrls: ['./lab-data.component.scss', '../../record-details/record-details.component.scss']
 })
 export class LabDataComponent implements OnChanges {
   @Input() recordDetails: any;
