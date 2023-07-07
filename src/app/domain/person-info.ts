@@ -13,6 +13,8 @@ export class PersonInfo {
   streetAddress: string;
   preferredLanguage: string;
   resource: any;
+  race: string;
+  ethnicity: string;
   constructor(recordDetails: any, utilsService: UtilsService){
     this.medicalRecordNumber = utilsService.getMedicalRecordNumber(recordDetails?.Patient);
     this.lastName = recordDetails?.Patient?.Name?.family ?? '';
@@ -23,5 +25,7 @@ export class PersonInfo {
     this.streetAddress = recordDetails?.Patient?.Street_Address ?? '';
     this.preferredLanguage = recordDetails?.Patient?.Preferred_Language ?? '';
     this.resource = recordDetails;
+    this.race = recordDetails?.Race?.Display ?? '';
+    this.ethnicity = recordDetails?.Ethnicity?.Display ?? '';
   }
 }
