@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'http://yellowisland01.icl.gtri.org:8085',
-  apiUrl: "http://brownunify01.icl.gtri.org:8085"
+  apiUrl: 'http://yellowisland01.icl.gtri.org:8085',
+  //apiUrl: "http://brownunify01.icl.gtri.org:8085"
 };
 
 /*

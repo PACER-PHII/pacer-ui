@@ -89,8 +89,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onExportToCSV() {
-    //TODO implement export to excel
-    console.log("Exporting to Excel")
+    this.caseServiceRecordService.downloadExcelFile();
   }
 
   onShowHistory(record: CaseRecordDTO) {

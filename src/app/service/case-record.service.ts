@@ -28,11 +28,20 @@ export class CaseRecordService {
   };
 
   getRecordHistoryById(recordId: number):  Observable<any> {
-    return this.http.get("http://brownunify01.icl.gtri.org:8085/ecr-manager/ECRhistory", {params: new HttpParams()
+    return this.http.get(environment.apiUrl + "/ecr-manager/ECRhistory", {params: new HttpParams()
         .append('id', recordId)}).pipe(map((result: any) =>
         result as Object
       ),
     );
   };
+
+  downloadExcelFile() {
+    const a = document.createElement('a')
+    a.href = environment.apiUrl + "/ecr-manager/exportCSV"
+    a.download = environment.apiUrl.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
 
 }
