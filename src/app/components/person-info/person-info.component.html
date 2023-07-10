@@ -24,7 +24,7 @@
         <div class="demographic-label">Status: </div>
       </div>
       <div class="box-colum left-align">
-        <div class="demographic-info">Not Implemented</div>
+        <div class="demographic-info">{{ personInfo?.lastDiagnosisStr }}</div>
         <div class="demographic-info">{{ personInfo?.status }}</div>
       </div>
 
@@ -48,15 +48,6 @@
 
     </div>
 
-  <div class="box">
-    <button *ngIf="route?.snapshot?.url?.[0]?.path === 'record-details'" mat-button color="primary" (click)="onViewRecordHistory()">
-      <mat-icon>history</mat-icon>
-      View History
-    </button>
-    <button *ngIf="route?.snapshot?.url?.[0]?.path === 'record-history'" mat-button color="primary" (click)="onViewRecordDetails()">
-      <mat-icon>table_view</mat-icon>
-      View Details
-    </button>
-  </div>
+  <div class="box"></div>
   </div>
 </mat-toolbar>

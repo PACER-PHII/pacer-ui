@@ -1,16 +1,21 @@
 <app-person-info></app-person-info>
 <div class="container">
   <div class="top-margin">
-    <div class="box page-title">Record Details</div>
+    <div class="box" style="justify-content: space-between; margin-top: 24px">
+      <button *ngIf="route?.snapshot?.url?.[0]?.path === 'record-details'" mat-raised-button color="primary" (click)="onViewRecordHistory()">
+        <mat-icon>history</mat-icon>
+        View History
+      </button>
+      <div class="box page-title">Record Details</div>
+      <button mat-raised-button (click)="onQueryRecord();  $event.stopPropagation()" color="warn">
+        <mat-icon>sync</mat-icon>
+        Query Record
+      </button>
+    </div>
 
     <div class="top-margin box">
       <button mat-stroked-button (click)="accordion.openAll()"><mat-icon>expand_more</mat-icon>Expand All</button>
       <button mat-stroked-button style="margin-left: 16px" (click)="accordion.closeAll()"><mat-icon>expand_less</mat-icon>Collapse All</button>
-      <span class="content-spacer"></span>
-      <button mat-raised-button (click)="onQueryRecord();  $event.stopPropagation()" color="warn">
-        <mat-icon>settings</mat-icon>
-        Query Record
-      </button>
     </div>
     <div class="top-margin">
     <mat-accordion multi>

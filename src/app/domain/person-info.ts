@@ -6,7 +6,7 @@ export class PersonInfo {
   medicalRecordNumber: number | null;
   lastName: string;
   givenName: string;
-  diagnosis: string;
+  lastDiagnosisStr: string;
   dob: Date | null;
   status: CaseRecordStatus | null;
   gender: AdministrativeSex | null;
@@ -19,7 +19,7 @@ export class PersonInfo {
     this.medicalRecordNumber = utilsService.getMedicalRecordNumber(recordDetails?.Patient);
     this.lastName = recordDetails?.Patient?.Name?.family ?? '';
     this.givenName = recordDetails?.Patient?.Name?.given ?? '';
-    this.diagnosis = utilsService.getDiagnosisDisplayValue(recordDetails);
+    this.lastDiagnosisStr = utilsService.getDiagnosisDisplayValue(recordDetails?.Patient?.Diagnosis);
     this.dob = utilsService.getDate(recordDetails?.Patient?.Birth_Date);
     this.gender = utilsService.getGender(recordDetails?.Patient?.Sex);
     this.streetAddress = recordDetails?.Patient?.Street_Address ?? '';

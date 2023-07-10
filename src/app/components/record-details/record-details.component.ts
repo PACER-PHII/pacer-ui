@@ -30,7 +30,7 @@ export class RecordDetailsComponent implements OnInit {
   isLargeScreenMode = true;
   readonly NO_DATA_TO_DISPLAY = "No data to display."
   constructor(
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
     private breakpointObserver: BreakpointObserver,
     private router: Router,

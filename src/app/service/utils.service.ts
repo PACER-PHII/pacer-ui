@@ -94,6 +94,11 @@ export class UtilsService {
   }
 
   getDiagnosisDisplayValue(diagnosis){
-    return diagnosis?.[0] ?? null;
+    // TODO Test with actual data
+    if(!diagnosis?.length){
+      return '';
+    }
+    const sorted = diagnosis?.sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime());
+    return sorted?.length > 0 ? sorted[0] : (diagnosis?.[0].display ?? null);
   }
 }
