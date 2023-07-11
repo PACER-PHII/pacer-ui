@@ -11,7 +11,7 @@ export class DateValuePipe implements PipeTransform {
       const datePipe = new DatePipe('en-US');
       const formattedDate = datePipe.transform(value, 'MMM d, yyyy');
       const formattedTime = datePipe.transform(value, 'HH:mm');
-      return `${formattedDate} | ${formattedTime}`;
+      return `${formattedDate}, ${formattedTime}`;
     } else if (!isNaN(parseFloat(value))) {
       // If the value is a number, return it as is
       return parseInt(value);

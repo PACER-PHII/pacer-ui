@@ -27,6 +27,7 @@ export class RecordDetailsComponent implements OnInit {
 
   recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;
+  recordHistory: any[];
   isLargeScreenMode = true;
   readonly NO_DATA_TO_DISPLAY = "No data to display."
   constructor(
@@ -40,6 +41,7 @@ export class RecordDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCaseRecordDetails(this.recordId);
+    this.getCaseRecordHistory(this.recordId);
 
     this.breakpointObserver.observe([
       Breakpoints.Handset,
@@ -125,5 +127,12 @@ export class RecordDetailsComponent implements OnInit {
 
   onQueryRecord() {
 
+  }
+
+  private getCaseRecordHistory(recordId: number) {
+    this.caseRecordService.getRecordHistoryById(recordId).subscribe({
+      next: value => this.recordHistory = value,
+      error: err => console.error(err)
+    })
   }
 }

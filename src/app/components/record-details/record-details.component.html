@@ -2,10 +2,7 @@
 <div class="container">
   <div class="top-margin">
     <div class="box" style="justify-content: space-between; margin-top: 24px">
-      <button *ngIf="route?.snapshot?.url?.[0]?.path === 'record-details'" mat-raised-button color="primary" (click)="onViewRecordHistory()">
-        <mat-icon>history</mat-icon>
-        View History
-      </button>
+      <div></div>
       <div class="box page-title">Record Details</div>
       <button mat-raised-button (click)="onQueryRecord();  $event.stopPropagation()" color="warn">
         <mat-icon>sync</mat-icon>
@@ -51,7 +48,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-medications-provided  [recordDetails]="caseDetails"></app-medications-provided>
+        <app-medications-provided  [recordDetails]="caseDetails" [recordHistory]="recordHistory"></app-medications-provided>
       </mat-expansion-panel>
 
       <mat-expansion-panel>

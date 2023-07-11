@@ -1,20 +1,58 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {AppConstants} from "../../../providers/app-constants";
 import {SimpleKeyValue} from "../../record-details/record-details.component";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {CaseRecordDTO} from "../../../domain/case-record-dto";
 
+export class SimpleMedProvided{
+  source: string;
+  code: string;
+  system: string;
+  dosage: string;
+  date: Date;
+  frequency: string;
+  display: string;
+  constructor(medProvided: any, source: string, date: string){
+    this.source = source ?? '';
+    this.date = new Date(date);
+    this.code = medProvided.Code ?? '';
+    this.system = medProvided.System ?? '';
+    this.display = medProvided.Display ?? '';
+    this.dosage = `${medProvided?.dosage?.value} ${medProvided?.dosage?.unit}`;
+    this.frequency = medProvided.frequency ?? '';
+  }
+}
 @Component({
   selector: 'app-medications-provided',
   templateUrl: './medications-provided.component.html',
   styleUrls: ['./medications-provided.component.scss', '../../record-details/record-details.component.scss']
 })
+
 export class MedicationsProvidedComponent implements OnChanges{
   @Input() recordDetails: any;
+  @Input() recordHistory: any;
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  dataSource: MatTableDataSource<SimpleMedProvided>;
+
   medicationsProvided: any[];
+  medicationHistory: SimpleMedProvided[] = [];
+
+  displayedColumns: string[] = ['source', 'date', 'code', 'system', 'display', 'dosage', 'frequency'];
+  historyVisible: boolean = false;
 
   constructor(public appConstants: AppConstants){}
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['recordDetails']?.currentValue){
       this.medicationsProvided = this.getProvidedMedications(this.recordDetails);
+    }
+
+    if(changes['recordHistory']?.currentValue){
+      this.medicationHistory = this.getMedicationHistory(this.recordHistory);
+      this.dataSource = new MatTableDataSource<SimpleMedProvided>(this.medicationHistory);
+      this.dataSource.sort = this.sort;
     }
   }
 
@@ -38,4 +76,17 @@ export class MedicationsProvidedComponent implements OnChanges{
     return nestedArrayList;
   }
 
+  private getMedicationHistory(medicationHistory: any[]) {
+    const medsProvided = medicationHistory.map(
+      record => {
+         return record?.data?.Patient['Medication Provided'].map(medication => {
+          return {source: record.source, date: record.date, medication: medication}
+        })
+      }
+    )
+      .flat(1)
+      .map(record => new SimpleMedProvided(record.medication, record.source, record.date));
+
+    return medsProvided;
+  }
 }
