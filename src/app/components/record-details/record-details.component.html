@@ -20,17 +20,6 @@
     <div class="top-margin">
     <mat-accordion multi>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Identifying Info
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <app-identity-info [recordDetails]="caseDetails"></app-identity-info>
-      </mat-expansion-panel>
-
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -40,6 +29,18 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <app-diagnosis [recordDetails]="caseDetails"></app-diagnosis>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Identifying Info
+          </mat-panel-title>
+          <mat-panel-description>
+            Contains raw data about the case record identity
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-identity-info [recordDetails]="caseDetails"></app-identity-info>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -114,7 +115,7 @@
             Travel History
           </mat-panel-title>
           <mat-panel-description>
-            Not Implemented - no data
+            Currently not implemented
           </mat-panel-description>
         </mat-expansion-panel-header>
         Not Implemented

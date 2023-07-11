@@ -15,6 +15,7 @@ export class PersonInfo {
   resource: any;
   race: string;
   ethnicity: string;
+  pregnant: string;
   constructor(recordDetails: any, utilsService: UtilsService){
     this.medicalRecordNumber = utilsService.getMedicalRecordNumber(recordDetails?.Patient);
     this.lastName = recordDetails?.Patient?.Name?.family ?? '';
@@ -24,8 +25,9 @@ export class PersonInfo {
     this.gender = utilsService.getGender(recordDetails?.Patient?.Sex);
     this.streetAddress = recordDetails?.Patient?.Street_Address ?? '';
     this.preferredLanguage = recordDetails?.Patient?.Preferred_Language ?? '';
+    this.race = recordDetails?.Patient?.Race?.Display ?? '';
+    this.ethnicity = recordDetails?.Patient?.Ethnicity?.Display ?? '';
     this.resource = recordDetails;
-    this.race = recordDetails?.Race?.Display ?? '';
-    this.ethnicity = recordDetails?.Ethnicity?.Display ?? '';
+    this.pregnant = utilsService.getPatientPregnantStr(recordDetails?.Patient?.Pregnant);
   }
 }

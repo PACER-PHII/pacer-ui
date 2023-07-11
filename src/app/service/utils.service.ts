@@ -101,4 +101,14 @@ export class UtilsService {
     const sorted = diagnosis?.sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime());
     return sorted?.length > 0 ? sorted[0] : (diagnosis?.[0].display ?? null);
   }
+
+  getPatientPregnantStr(pregnant: boolean | undefined) {
+    if(pregnant == true){
+      return 'Yes';
+    }
+    else if(pregnant == false){
+      return "No";
+    }
+    else return '';
+  }
 }
