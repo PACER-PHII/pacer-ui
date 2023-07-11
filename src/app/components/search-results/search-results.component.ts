@@ -66,13 +66,7 @@ export class SearchResultsComponent implements OnInit {
       Breakpoints.Small,
     ])
       .subscribe(result => {
-        console.log("value changed");
-        this.isLargeScreenMode = true;
-
-        if (result.matches) {
-          this.isLargeScreenMode = false;
-        }
-
+        this.isLargeScreenMode = !result.matches;
       });
   }
 
@@ -92,15 +86,7 @@ export class SearchResultsComponent implements OnInit {
     this.caseServiceRecordService.downloadExcelFile();
   }
 
-  onShowHistory(record: CaseRecordDTO) {
-    this.router.navigate(['/record-history', record.recordId]);
-  }
-
   onQueryRecord(record) {
     //TODO Implement Action
-  }
-
-  onViewHistory(record) {
-    this.router.navigate(['/record-history', record.recordId]);
   }
 }

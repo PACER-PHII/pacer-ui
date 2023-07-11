@@ -24,7 +24,6 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { RecordHistoryComponent } from './components/record-history/record-history.component';
 import { PersonInfoComponent } from './components/person-info/person-info.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -45,7 +44,6 @@ import { SymptomsComponent } from './components/widgets/symptoms/symptoms.compon
     AppComponent,
     SearchResultsComponent,
     RecordDetailsComponent,
-    RecordHistoryComponent,
     PersonInfoComponent,
     IdentityInfoComponent,
     HealthcareProvidersComponent,
