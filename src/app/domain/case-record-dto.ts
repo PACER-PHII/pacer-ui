@@ -9,8 +9,8 @@ export class CaseRecordDTO {
   givenName: string;
   diagnosis: string;
   dob: Date | null;
-  status: CaseRecordStatus | null;
-  gender: AdministrativeSex | null;
+  status: CaseRecordStatus | string | null;
+  gender: AdministrativeSex | string |  null;
   resource: any;
 
 
@@ -19,7 +19,7 @@ export class CaseRecordDTO {
     this.medicalRecordNumber = utilsService.getMedicalRecordNumber(responseRecord?.Patient);
     this.lastName = responseRecord?.Patient?.Name?.family ?? '';
     this.givenName = responseRecord?.Patient?.Name?.given ?? '';
-    this.diagnosis = utilsService.getDiagnosisDisplayValue(responseRecord?.Patient);
+    this.diagnosis = utilsService.getDiagnosisDisplayValue(responseRecord?.Patient?.Diagnosis);
     this.dob = utilsService.getDate(responseRecord?.Patient?.Birth_Date);
     this.status = utilsService.getStatus(responseRecord);
     this.gender = utilsService.getGender(responseRecord?.Patient?.Sex);

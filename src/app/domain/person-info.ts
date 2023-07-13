@@ -9,7 +9,7 @@ export class PersonInfo {
   lastDiagnosisStr: string;
   dob: Date | null;
   status: CaseRecordStatus | null;
-  gender: AdministrativeSex | null;
+  gender: AdministrativeSex | string | null;
   streetAddress: string;
   preferredLanguage: string;
   resource: any;

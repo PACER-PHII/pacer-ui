@@ -35,6 +35,13 @@ export class CaseRecordService {
     );
   };
 
+  triggerRecord(recordId: number):  Observable<any> {
+    return this.http.post(environment.apiUrl + "/ecr-manager/trigger?id=" + recordId, '').pipe(map((result: any) =>
+        result as Object
+      ),
+    );
+  };
+
   downloadExcelFile() {
     const a = document.createElement('a')
     a.href = environment.apiUrl + "/ecr-manager/exportCSV"

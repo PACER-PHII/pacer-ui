@@ -87,6 +87,9 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onQueryRecord(record) {
-    //TODO Implement Action
+    this.caseServiceRecordService.triggerRecord(record.recordId).subscribe({
+      next: value => console.log(value),
+      error: err=> console.error(err)
+    })
   }
 }

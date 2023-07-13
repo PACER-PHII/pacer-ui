@@ -34,7 +34,7 @@ export class UtilsService {
         return CaseRecordStatus.P;
       default: {
         console.warn("Invalid Status Code passed for record " + JSON.stringify(caseRecord));
-        return null;
+        return statusCode
       }
     }
   }
@@ -43,7 +43,7 @@ export class UtilsService {
    * See https://hl7-definition.caristix.com/v2/HL7v2.5.1/Tables/0001
    * For values used in the function
    */
-  getGender(genderStr: string): AdministrativeSex | null {
+  getGender(genderStr: string): AdministrativeSex | null | string {
     if(!genderStr){
       return null;
     }
@@ -52,23 +52,35 @@ export class UtilsService {
         return AdministrativeSex.A;
       case "F":
         return AdministrativeSex.F;
+      case "female":
+        return AdministrativeSex.F;
       case "M":
+        return AdministrativeSex.M;
+      case "male":
         return AdministrativeSex.M;
       case "N":
         return AdministrativeSex.N;
       case "O":
         return AdministrativeSex.O;
+      case "other":
+        return AdministrativeSex.O;
       case "U":
+        return AdministrativeSex.U;
+      case "unknown":
         return AdministrativeSex.U;
       default:
         console.warn("Invalid Patient.Sex passed " + genderStr);
-        return null;
+        return genderStr;
     }
   }
 
   getDate(dateStr) {
     if(!dateStr){
       return null;
+    }
+    let date = new Date();
+    if(date instanceof Date){
+      return date;
     }
     if(!dateStr.length
       ||
@@ -94,12 +106,11 @@ export class UtilsService {
   }
 
   getDiagnosisDisplayValue(diagnosis){
-    // TODO Test with actual data
     if(!diagnosis?.length){
       return '';
     }
     const sorted = diagnosis?.sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime());
-    return sorted?.length > 0 ? sorted[0] : (diagnosis?.[0].display ?? null);
+    return sorted?.length > 0 ? sorted?.[0].Display : null;
   }
 
   getPatientPregnantStr(pregnant: boolean | undefined) {

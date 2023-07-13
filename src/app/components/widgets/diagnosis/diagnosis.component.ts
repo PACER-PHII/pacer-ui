@@ -19,8 +19,9 @@ export class DiagnosisComponent implements OnChanges{
   }
 
   private getDiagnosis(recordDetails: any) {
-    let nestedArrayList = []
-    recordDetails['Diagnosis']?.forEach(medication => {
+    let nestedArrayList = [];
+    console.log(recordDetails);
+    recordDetails?.Patient?.Diagnosis.forEach(medication => {
       let arrayList: any[] = [];
       for (const key in medication) {
         const object = new SimpleKeyValue(key, medication[key]);

@@ -2,7 +2,7 @@ export enum AdministrativeSex {
   "A" = "Ambiguous",
   "F" = "Female",
   "M" = "Male",
-  "N" = 	"Not applicable",
+  "N" = "Not applicable",
   "O" = "Other",
-  "U" = "Unknown"
+  "U" = "Unknown",
 }

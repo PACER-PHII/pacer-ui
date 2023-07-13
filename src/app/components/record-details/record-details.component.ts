@@ -58,75 +58,19 @@ export class RecordDetailsComponent implements OnInit {
     this.caseRecordService.getRecordDetailsById(caseId).subscribe(
       (response: any) => {
         this.caseDetails = response;
-
-        //TODO: Remove hardcoded data. It was added for testing purpose
-        this.caseDetails["Medication Provided"] = [
-          {
-            "Code": "141962",
-            "System": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "Display": "Azithromycin 250 MG OralCapsule",
-            "Dosage": {
-              "Value": "",
-              "Unit": ""
-            },
-            "Date": "Thu Mar 27 00:00:00 UTC 2200",
-            "Frequency": ""
-          },
-          {
-            "Code": "1665497",
-            "System": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "Display": "levoFLOXacin 250 MG in 50 ML Injection",
-            "Dosage": {
-              "Value": "",
-              "Unit": ""
-            },
-            "Date": "Thu Mar 27 00:00:00 UTC 2200",
-            "Frequency": ""
-          },
-          {
-            "Code": "1423080",
-            "System": "http://www.nlm.nih.gov/research/umls/rxnorm",
-            "Display": "doxycycline hyclate 200 MG Delayed Release Oral Tablet",
-            "Dosage": {
-              "Value": "",
-              "Unit": ""
-            },
-            "Date": "Thu Mar 27 00:00:00 UTC 2200",
-            "Frequency": ""
-          }
-        ];
-        this.caseDetails["Diagnosis"] = [
-          {
-            "Code": "105629000",
-            "System": "urn:oid:2.16.840.1.113883.6.96",
-            "Display": "",
-            "Date": "Thu Mar 27 00:00:00 UTC 2200"
-          }
-        ];
-        this.caseDetails["Symptoms"] = [
-          {
-            "Code": "105629000",
-            "System": "urn:oid:2.16.840.1.113883.6.96",
-            "Display": "",
-          }
-        ];
-
         const personInfo = new PersonInfo(response, this.utilsService);
         this.personInfoService.setPersonInfo(personInfo);
       }
     );
   }
 
-  scroll(element: HTMLDivElement) {
-    element.scrollIntoView();
-  }
-
-  onViewRecordHistory() {
-    this.router.navigate(['/record-history', this.recordId]);
-  }
-
-  onQueryRecord() {
-
+  onQueryRecord(recordId: number) {
+    this.caseRecordService.triggerRecord(recordId).subscribe({
+      next: value => {
+        console.log(value);
+      },
+      error: err => console.error(err)
+    })
   }
 
   private getCaseRecordHistory(recordId: number) {
