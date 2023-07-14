@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.record-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.record-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.record-row td {
+  border-bottom-width: 0;
+}
+
+.record-detail {
+  overflow: hidden;
+  display: flex;
+  background-color: whitesmoke;
+  border-radius: 8px;
+}
+
+.mat-column-expand {
+  width: 24px
+}
+

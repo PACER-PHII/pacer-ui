@@ -86,6 +86,10 @@ export class SearchResultsComponent implements OnInit {
     this.caseServiceRecordService.downloadExcelFile();
   }
 
+  onViewHistory(record) {
+    this.router.navigate(['/record-history', record.recordId]);
+  }
+
   onQueryRecord(record) {
     this.caseServiceRecordService.triggerRecord(record.recordId).subscribe({
       next: value => console.log(value),

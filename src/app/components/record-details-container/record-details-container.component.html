@@ -1,0 +1,115 @@
+<mat-accordion multi>
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Diagnosis
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-diagnosis [recordDetails]="caseDetails"></app-diagnosis>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Identifying Info
+      </mat-panel-title>
+      <mat-panel-description>
+        Contains raw data about the case record identity
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-identity-info [recordDetails]="caseDetails"></app-identity-info>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Medications Provided
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-medications-provided  [recordDetails]="caseDetails" [recordHistory]="recordHistory"></app-medications-provided>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Lab Orders
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-lab-data  [recordDetails]="caseDetails"></app-lab-data>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Symptoms
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-symptoms  [recordDetails]="caseDetails"></app-symptoms>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Immunization History
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-immunization-history [recordDetails]="caseDetails"></app-immunization-history>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Providers
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-healthcare-providers [recordDetails]="caseDetails"></app-healthcare-providers>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Facility
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-facility-data [recordDetails]="caseDetails"></app-facility-data>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Travel History
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently not implemented
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    Not Implemented
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Guardians Info
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-guardians-info [recordDetails]="caseDetails"></app-guardians-info>
+  </mat-expansion-panel>
+
+</mat-accordion>

@@ -122,4 +122,8 @@ export class UtilsService {
     }
     else return '';
   }
+
+  deepCopy(value: any){
+    return JSON.parse(JSON.stringify(value));
+  }
 }

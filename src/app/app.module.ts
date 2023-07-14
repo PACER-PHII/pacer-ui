@@ -24,6 +24,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { RecordHistoryComponent } from './components/record-history/record-history.component';
 import { PersonInfoComponent } from './components/person-info/person-info.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -38,12 +39,16 @@ import { LabDataComponent } from './components/widgets/lab-data/lab-data.compone
 import {DateValuePipe} from "./pipes/date-value.pipe";
 import { DiagnosisComponent } from './components/widgets/diagnosis/diagnosis.component';
 import { SymptomsComponent } from './components/widgets/symptoms/symptoms.component';
+import { RecordDetailsContainerComponent } from './components/record-details-container/record-details-container.component';
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
     RecordDetailsComponent,
+    RecordHistoryComponent,
     PersonInfoComponent,
     IdentityInfoComponent,
     HealthcareProvidersComponent,
@@ -54,7 +59,8 @@ import { SymptomsComponent } from './components/widgets/symptoms/symptoms.compon
     LabDataComponent,
     DateValuePipe,
     DiagnosisComponent,
-    SymptomsComponent
+    SymptomsComponent,
+    RecordDetailsContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +85,8 @@ import { SymptomsComponent } from './components/widgets/symptoms/symptoms.compon
     MatMenuModule,
     MatSnackBarModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule
   ],
   providers: [AppConstants],
   bootstrap: [AppComponent]

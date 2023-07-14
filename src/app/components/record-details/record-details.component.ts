@@ -73,6 +73,10 @@ export class RecordDetailsComponent implements OnInit {
     })
   }
 
+  onViewRecordHistory() {
+    this.router.navigate(['/record-history', this.recordId]);
+  }
+
   private getCaseRecordHistory(recordId: number) {
     this.caseRecordService.getRecordHistoryById(recordId).subscribe({
       next: value => this.recordHistory = value,

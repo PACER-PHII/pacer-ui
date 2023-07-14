@@ -71,6 +71,16 @@
             <mat-icon>table_view</mat-icon>
           </button>
         </span>
+        <span style="margin-right: 4px">
+          <button mat-stroked-button *ngIf="isLargeScreenMode" (click)="onViewHistory(record)">
+            <mat-icon>history</mat-icon>History
+          </button>
+          <button *ngIf="!isLargeScreenMode" mat-icon-button
+                  (click)="onViewHistory(record)" aria-label="View History"
+                  matTooltip="View History">
+            <mat-icon>history</mat-icon>
+          </button>
+        </span>
         <span>
           <button *ngIf="isLargeScreenMode" mat-stroked-button
                   (click)="onQueryRecord(record)" color="warn">
