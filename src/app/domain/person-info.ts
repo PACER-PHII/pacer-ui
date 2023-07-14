@@ -29,5 +29,6 @@ export class PersonInfo {
     this.ethnicity = recordDetails?.Patient?.Ethnicity?.Display ?? '';
     this.resource = recordDetails;
     this.pregnant = utilsService.getPatientPregnantStr(recordDetails?.Patient?.Pregnant);
+    this.status = utilsService.getStatus(recordDetails);
   }
 }

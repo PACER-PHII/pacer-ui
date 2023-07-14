@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordService} from "../../service/case-record.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
@@ -6,6 +6,7 @@ import {MatAccordion} from "@angular/material/expansion";
 import {UtilsService} from "../../service/utils.service";
 import {PersonInfo} from "../../domain/person-info";
 import {PersonInfoService} from "../../service/person-info.service";
+import {mergeMap, Subscription} from "rxjs";
 
 export class SimpleKeyValue{
   key: string;
@@ -22,13 +23,14 @@ export class SimpleKeyValue{
   styleUrls: ['./record-details.component.scss']
 })
 
-export class RecordDetailsComponent implements OnInit {
+export class RecordDetailsComponent implements OnInit, OnDestroy{
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   recordId = parseInt(this.route.snapshot.params['id']);
   caseDetails: any;
   recordHistory: any[];
   isLargeScreenMode = true;
+  triggerSubscription$: Subscription;
   readonly NO_DATA_TO_DISPLAY = "No data to display."
   constructor(
     public route: ActivatedRoute,
@@ -38,6 +40,10 @@ export class RecordDetailsComponent implements OnInit {
     private utilsService: UtilsService,
     private personInfoService: PersonInfoService
   ) { }
+
+  ngOnDestroy(): void {
+    this.triggerSubscription$.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.getCaseRecordDetails(this.recordId);
@@ -65,12 +71,12 @@ export class RecordDetailsComponent implements OnInit {
   }
 
   onQueryRecord(recordId: number) {
-    this.caseRecordService.triggerRecord(recordId).subscribe({
-      next: value => {
-        console.log(value);
-      },
+    this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
+      .pipe(
+        mergeMap(() => this.caseRecordService.checkTriggerResult(recordId))).subscribe({
+      next: value => console.log(value),
       error: err => console.error(err)
-    })
+    });
   }
 
   onViewRecordHistory() {

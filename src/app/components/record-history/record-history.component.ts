@@ -54,8 +54,6 @@ export class RecordHistoryComponent implements OnInit {
   sections: { selected: boolean, name: string }[];
   recordId = parseInt(this.route.snapshot.params['id']);
 
-  sourceFilter = 'elr';
-
   constructor(
     private caseRecordService: CaseRecordService,
     private route: ActivatedRoute,
@@ -66,12 +64,11 @@ export class RecordHistoryComponent implements OnInit {
   }
 
   getFilterSections(parsedRecordHistory): any {
-    const sections = Array.from(
+    return Array.from(
       new Set(parsedRecordHistory.map(record => record.source))
     ).map(selection => {
       return {selected: true, name: selection}}
     )
-    return sections;
   }
 
   ngOnInit(): void {

@@ -12,7 +12,4 @@ export class RecordDetailsContainerComponent {
   @Input() expandCollapseBtnsVisible: boolean = true;
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
-
-
-
 }
