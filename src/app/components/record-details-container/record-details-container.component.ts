@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import {MatAccordion} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-record-details-container',
@@ -8,4 +9,10 @@ import {Component, Input} from '@angular/core';
 export class RecordDetailsContainerComponent {
   @Input() caseDetails;
   @Input() recordHistory;
+  @Input() expandCollapseBtnsVisible: boolean = true;
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+
+
+
 }
