@@ -8,10 +8,27 @@
         <mat-icon>history</mat-icon>
         View History
       </button>
-      <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn">
-        <mat-icon>sync</mat-icon>
-        Query Record
-      </button>
+      <span *ngIf="loadingDataMessage">{{ loadingDataMessage }} {{ time }} seconds
+        <mat-icon
+          color=primary
+          matTooltip="The Qurey Record operation runs for up to 3 minutes (360 seconds). During this time we refresh the record every 10 sends to track the record status.">
+          info
+        </mat-icon>
+      </span>
+      <div>
+        <button mat-raised-button (click)="onRefreshRecord(recordId);" *ngIf="!isLoading" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
+          <mat-icon>sync</mat-icon>
+          Reload Record
+        </button>
+        <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn" *ngIf="!isLoadingTriggerData">
+          <mat-icon>bolt</mat-icon>
+          Query Record
+        </button>
+        <button mat-raised-button (click)="onCancelRecordRefresh(recordId);" color="primary" *ngIf="isLoadingTriggerData">
+          <mat-icon>cancel</mat-icon>
+          Stop Auto Refresh
+        </button>
+      </div>
     </div>
     <div class="top-margin">
       <app-record-details-container

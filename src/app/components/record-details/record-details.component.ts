@@ -6,7 +6,7 @@ import {MatAccordion} from "@angular/material/expansion";
 import {UtilsService} from "../../service/utils.service";
 import {PersonInfo} from "../../domain/person-info";
 import {PersonInfoService} from "../../service/person-info.service";
-import {mergeMap, Subscription} from "rxjs";
+import {mergeMap, Subscription, tap} from "rxjs";
 
 export class SimpleKeyValue{
   key: string;
@@ -31,7 +31,13 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
   recordHistory: any[];
   isLargeScreenMode = true;
   triggerSubscription$: Subscription;
-  readonly NO_DATA_TO_DISPLAY = "No data to display."
+  isLoadingTriggerData: boolean = false;
+  isLoading: boolean = false;
+  readonly NO_DATA_TO_DISPLAY = "No data to display.";
+  loadingDataMessage: string = '';
+
+  time: number = 0;
+  interval;
   constructor(
     public route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
@@ -42,7 +48,7 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
   ) { }
 
   ngOnDestroy(): void {
-    this.triggerSubscription$.unsubscribe();
+    this.triggerSubscription$?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -60,33 +66,99 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
       });
   }
 
-  getCaseRecordDetails(caseId: number): void{
-    this.caseRecordService.getRecordDetailsById(caseId).subscribe(
-      (response: any) => {
-        this.caseDetails = response;
-        const personInfo = new PersonInfo(response, this.utilsService);
-        this.personInfoService.setPersonInfo(personInfo);
+  getCaseRecordDetails(caseId: number): void {
+    this.isLoading = !this.isLoadingTriggerData;
+    this.caseRecordService.getRecordDetailsById(caseId).subscribe({
+        next: (response: any) => {
+          this.caseDetails = response;
+          const personInfo = new PersonInfo(response, this.utilsService);
+          this.personInfoService.setPersonInfo(personInfo);
+          this.isLoading = false;
+        },
+        error: err => {
+          console.error(err);
+          this.isLoading = false;
+        }
       }
     );
   }
 
+  stopTimer(){
+    this.time = 0;
+  }
+
+  startTimer() {
+    if(!this.interval){
+      this.interval = setInterval(() => {
+        this.time++;
+      },1000);
+    }
+
+  }
+
   onQueryRecord(recordId: number) {
+    this.isLoadingTriggerData = true;
+    this.startTimer();
+    this.setLoadingDataMessage("Query Record Operation Running. Time Elapsed: ")
     this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
       .pipe(
-        mergeMap(() => this.caseRecordService.checkTriggerResult(recordId))).subscribe({
-      next: value => console.log(value),
-      error: err => console.error(err)
-    });
+        mergeMap(() => this.caseRecordService.checkInitialTriggerResult(recordId).pipe(
+          tap({
+            next: value => {
+              this.caseDetails = value;
+              const personInfo = new PersonInfo(value, this.utilsService);
+              this.personInfoService.setPersonInfo(personInfo);
+            },
+            error: err => {
+              console.error(err);
+              this.setLoadingDataMessage("Server Error Occurred");
+            }
+          }),
+        )),
+        mergeMap(() => this.caseRecordService.checkSecondaryTriggerResult(recordId)),
+      ).subscribe({
+        next: value => {
+          this.isLoadingTriggerData = false;
+          this.caseDetails = value;
+          const personInfo = new PersonInfo(value, this.utilsService);
+          this.personInfoService.setPersonInfo(personInfo);
+          this.setLoadingDataMessage();
+          this.stopTimer();
+        },
+        error: err => {
+          console.error(err);
+          this.isLoadingTriggerData = false;
+          this.setLoadingDataMessage("Server Error Occurred");
+          this.stopTimer();
+        }
+      });
   }
+
 
   onViewRecordHistory() {
     this.router.navigate(['/record-history', this.recordId]);
   }
 
   private getCaseRecordHistory(recordId: number) {
+    //TODO See if I should remove this code since we may not need the record history
     this.caseRecordService.getRecordHistoryById(recordId).subscribe({
       next: value => this.recordHistory = value,
       error: err => console.error(err)
     })
+  }
+
+  setLoadingDataMessage(message?: string){
+    this.loadingDataMessage = message ?? '';
+  }
+
+  onCancelRecordRefresh(recordId: number) {
+    this.isLoadingTriggerData = false;
+    this.triggerSubscription$?.unsubscribe();
+    this.setLoadingDataMessage();
+    this.stopTimer();
+  }
+
+  onRefreshRecord(recordId: number) {
+    this.getCaseRecordDetails(recordId);
   }
 }

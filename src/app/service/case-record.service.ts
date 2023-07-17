@@ -43,16 +43,19 @@ export class CaseRecordService {
     );
   };
 
-  checkTriggerResult(recordId: number): Observable<any>{
+  checkSecondaryTriggerResult(recordId: number): Observable<any>{
     let attempts = 0;
-    const THREE_MINUTES = 360;
-    const ONE_SECOND = 1000;
+    const THREE_MINUTES = 36;
+    const TENS_SECONDS = 10000;
     return this.getRecordDetailsById(recordId).pipe(
-      repeat({delay: ONE_SECOND}),
-      takeWhile(data => (attempts++ <= 2) || data.Status !== "R"),
+      repeat({delay: TENS_SECONDS}),
+      takeWhile(data => ((attempts++ <= THREE_MINUTES) && data.Status == "R"), true),
       takeLast(1),
-      map(data => data.Status),
     )
+  }
+
+  checkInitialTriggerResult(recordId: number): Observable<any>{
+    return this.getRecordDetailsById(recordId)
   }
 
   downloadExcelFile() {
