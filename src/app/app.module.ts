@@ -41,6 +41,7 @@ import { DiagnosisComponent } from './components/widgets/diagnosis/diagnosis.com
 import { SymptomsComponent } from './components/widgets/symptoms/symptoms.component';
 import { RecordDetailsContainerComponent } from './components/record-details-container/record-details-container.component';
 import {FormsModule} from "@angular/forms";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -62,32 +63,33 @@ import {FormsModule} from "@angular/forms";
     SymptomsComponent,
     RecordDetailsContainerComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatCardModule,
-    MatGridListModule,
-    MatListModule,
-    MatTooltipModule,
-    MatTabsModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatCheckboxModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatCardModule,
+        MatGridListModule,
+        MatListModule,
+        MatTooltipModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatProgressBarModule
+    ],
   providers: [AppConstants],
   bootstrap: [AppComponent]
 })

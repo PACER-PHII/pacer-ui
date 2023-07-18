@@ -38,5 +38,17 @@ th {
 }
 
 .mat-column-status {
-  text-align:center;
+  //text-align:center;
+  //width: 20%;
+  white-space: nowrap;
+}
+
+.status-alignment {
+  display: flex;
+}
+
+.icon-button {
+  cursor: pointer;
+  color: -webkit-link;
+  margin: 0 4px
 }

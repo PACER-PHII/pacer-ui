@@ -172,4 +172,5 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   protected readonly CaseRecordStatus = CaseRecordStatus;
+
 }

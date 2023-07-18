@@ -8,7 +8,7 @@
       </mat-form-field>
     </div>
       <div class="push">
-        <button mat-raised-button color="primary" (click)="onExportToCSV()"><mat-icon>download</mat-icon>Export to CSV</button>
+        <button mat-raised-button  color="primary" (click)="onExportToCSV()"><mat-icon>download</mat-icon>Export to CSV</button>
       </div>
   </div>
   <div class="spinner-container" *ngIf="isLoading">
@@ -34,7 +34,8 @@
 
     <ng-container matColumnDef="diagnosis">
       <th mat-header-cell *matHeaderCellDef  mat-sort-header>Last Diagnosis
-        <mat-icon color="primary" matTooltip="Renders the display value for the latest diagnosis" (click)="$event.stopPropagation()">
+        <mat-icon color="primary" matTooltip="Renders the display value for the latest diagnosis" style="cursor: default"
+                  (click)="$event.stopPropagation()">
           info_i
         </mat-icon>
       </th>
@@ -53,11 +54,22 @@
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef  mat-sort-header> Status </th>
-      <td mat-cell *matCellDef="let record"> {{ record.isRefreshing ? '' : record.status  }}
-        <mat-spinner [diameter]="20" [color]="'warn'" *ngIf="record.isRefreshing" style="margin:0 auto;"
-                     mode="indeterminate"></mat-spinner> </td>
+      <td mat-cell *matCellDef="let record">
+        <mat-progress-bar color="primary" mode="indeterminate" *ngIf="record.isRefreshing && record.status==CaseRecordStatus.R" ></mat-progress-bar>
+        <div class="status-alignment">
+          <div style="justify-content: center;">{{ record.status  }}</div>
+          <div matTooltip="Triggers Auto refresh for up to 3 minites"
+            class="icon-button" *ngIf="!record.isRefreshing && record.status==CaseRecordStatus.R"
+            (click)="onAutoRefresh(record)"><mat-icon>sync</mat-icon>
+          </div>
+          <mat-icon *ngIf="record.isRefreshing && record.status==CaseRecordStatus.R"
+                    style="margin-left: 4px;" color="primary"
+                    matTooltip="The autorefresh is in progress and is retriveing records every 10 seconds">
+            info
+          </mat-icon>
+        </div>
     </ng-container>
-
+    <!--        <mat-spinner [diameter]="20" [color]="'warn'" style="margin:0 auto;" mode="indeterminate"></mat-spinner> {{ record.status  }} </td>-->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions</th>
       <td mat-cell *matCellDef="let record">
@@ -71,18 +83,12 @@
               <mat-icon>history</mat-icon>
               History
             </button>
-            <button mat-stroked-button *ngIf="(record.status != CaseRecordStatus.R) || record.isRefreshing"
+            <button mat-stroked-button
                     [disabled]="record.isRefreshing" color="warn"
                     (click)="onQueryRecord(record?.recordId)"
                     style="margin-left: 8px">
               <mat-icon>bolt</mat-icon>
               Query
-            </button>
-            <button mat-stroked-button *ngIf="!record.isRefreshing && record.status==CaseRecordStatus.R" color="warn"
-                    (click)="onAutoRefresh(record)"
-                    style="margin-left: 8px">
-              <mat-icon>sync</mat-icon>
-              Auto Refresh
             </button>
           </span>
 
@@ -96,16 +102,10 @@
               <mat-icon>history</mat-icon>
             </button>
 
-            <button *ngIf="record.status!=CaseRecordStatus.R && !record.isRefreshing"
-                    [disabled]="record.isRefreshing" mat-icon-button color="warn"
+            <button [disabled]="record.isRefreshing" mat-icon-button color="warn"
                     (click)="onQueryRecord(record?.recordId)" aria-label="Query Record"
                     matTooltip="Query Record">
               <mat-icon>bolt</mat-icon>
-            </button>
-            <button *ngIf="!record.isRefreshing && record.status==CaseRecordStatus.R" mat-icon-button color="warn"
-                    (click)="onAutoRefresh(record)" aria-label="Auto Refresh"
-                    matTooltip="Auto Refresh">
-              <mat-icon>sync</mat-icon>
             </button>
           </span>
         </span>
