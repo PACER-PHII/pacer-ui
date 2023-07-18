@@ -12,9 +12,10 @@ export class CaseRecordDTO {
   status: CaseRecordStatus | string | null;
   gender: AdministrativeSex | string |  null;
   resource: any;
+  isRefreshing: boolean;
 
 
-  constructor(responseRecord: any, utilsService: UtilsService){
+  constructor(responseRecord: any, utilsService: UtilsService, isRefreshing ?: boolean){
     this.recordId = responseRecord.Id;
     this.medicalRecordNumber = utilsService.getMedicalRecordNumber(responseRecord?.Patient);
     this.lastName = responseRecord?.Patient?.Name?.family ?? '';
@@ -24,5 +25,6 @@ export class CaseRecordDTO {
     this.status = utilsService.getStatus(responseRecord);
     this.gender = utilsService.getGender(responseRecord?.Patient?.Sex);
     this.resource = responseRecord;
+    this.isRefreshing = isRefreshing ?? false;
   }
 }

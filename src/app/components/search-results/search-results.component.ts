@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {mergeMap, Subscription, tap} from "rxjs";
 import {CaseRecordService} from "../../service/case-record.service";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
@@ -8,13 +8,15 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
 import {CaseRecordDTO} from "../../domain/case-record-dto";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {UtilsService} from "../../service/utils.service";
+import {CaseRecordStatus} from "../../domain/case-record-status";
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -23,18 +25,28 @@ export class SearchResultsComponent implements OnInit {
   loadDataObservable$: Subscription;
   isLoading = false;
   dataSource: MatTableDataSource<CaseRecordDTO>;
+  triggerSubscription$: Subscription;
   isLargeScreenMode: boolean = true;
+  isLoadingTriggerData: boolean = false;
+  loadingDataMessage: boolean = false;
+  time: number = 0;
+  interval;
 
   constructor(
-    private caseServiceRecordService: CaseRecordService,
+    private caseRecordService: CaseRecordService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private responsive: BreakpointObserver
+    private responsive: BreakpointObserver,
+    private utilsService: UtilsService
   ) { }
+
+  ngOnDestroy(): void {
+    this.triggerSubscription$?.unsubscribe();
+  }
 
   getCaseRecords(): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseServiceRecordService.getCaseRecordsList().subscribe({
+    this.loadDataObservable$ = this.caseRecordService.getCaseRecordsList().subscribe({
         next: (response: CaseRecordDTO[]) => {
           this.dataSource = new MatTableDataSource<CaseRecordDTO>(response);
           this.isLoading = false;
@@ -83,17 +95,81 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onExportToCSV() {
-    this.caseServiceRecordService.downloadExcelFile();
+    this.caseRecordService.downloadExcelFile();
   }
 
   onViewHistory(record) {
     this.router.navigate(['/record-history', record.recordId]);
   }
 
-  onQueryRecord(record) {
-    this.caseServiceRecordService.triggerRecord(record.recordId).subscribe({
-      next: value => console.log(value),
-      error: err=> console.error(err)
+  stopTimer(){
+    this.time = 0;
+  }
+
+  startTimer() {
+    if(!this.interval){
+      this.interval = setInterval(() => {
+        this.time++;
+      },1000);
+    }
+
+  }
+
+  onQueryRecord(recordId: number) {
+    this.isLoadingTriggerData = true;
+    this.startTimer();
+    this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
+      .pipe(
+        mergeMap(() => this.caseRecordService.checkInitialTriggerResult(recordId).pipe(
+          tap({
+            next: value => {
+              const caseRecordDTO = new CaseRecordDTO(value, this.utilsService, true);
+              this.refreshDataSourceData(caseRecordDTO);
+            },
+            error: err => {
+              console.error(err);
+            }
+          }),
+        )),
+        mergeMap(() => this.caseRecordService.checkSecondaryTriggerResult(recordId)),
+      ).subscribe({
+        next: value => {
+          this.isLoadingTriggerData = false;
+          this.stopTimer();
+          const caseRecordDTO = new CaseRecordDTO(value, this.utilsService, false);
+          this.refreshDataSourceData(caseRecordDTO);
+
+        },
+        error: err => {
+          console.error(err);
+          this.isLoadingTriggerData = false;
+          this.stopTimer();
+        }
+      });
+  }
+
+  private refreshDataSourceData(caseDto: CaseRecordDTO) {
+    // const caseDto = new CaseRecordDTO(value, this.utilsService);
+    // caseDto.isRefreshRunning = true;
+    console.log(caseDto);
+    this.dataSource.data = this.dataSource.data.map(record => (record.recordId  == caseDto.recordId) ? caseDto: record);
+    console.log(this.dataSource.data);
+  }
+
+
+  onAutoRefresh(record: CaseRecordDTO) {
+    record.isRefreshing = true;
+    this.refreshDataSourceData(record)
+    this.caseRecordService.checkSecondaryTriggerResult(record.recordId).subscribe({
+      next: value => {
+        const caseRecordDTO = new CaseRecordDTO(value, this.utilsService);
+        this.refreshDataSourceData(caseRecordDTO)
+      },
+      error: err => {
+        console.error(err)
+      }
     })
   }
+
+  protected readonly CaseRecordStatus = CaseRecordStatus;
 }
