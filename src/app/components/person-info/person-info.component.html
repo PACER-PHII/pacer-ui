@@ -15,7 +15,7 @@
         <div class="demographic-label">Status: </div>
       </div>
       <div class="box-colum left-align">
-        <div class="demographic-info">{{ personInfo?.lastDiagnosisStr }}</div>
+        <div class="demographic-info">{{ personInfo?.lastDiagnosisStr?.substring(0, 50) }}</div>
         <div class="demographic-info">{{ personInfo?.status }}</div>
       </div>
 
@@ -34,7 +34,7 @@
       </div>
       <div class="box-colum left-align">
         <div class="demographic-info">{{ personInfo?.pregnant }}</div>
-        <div class="demographic-info">{{ personInfo?.streetAddress }}</div>
+        <div class="demographic-info">{{ personInfo?.streetAddress?.substring(0, 50) }}</div>
       </div>
 
       <div class="box-colum right-align">

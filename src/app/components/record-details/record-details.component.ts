@@ -7,6 +7,7 @@ import {UtilsService} from "../../service/utils.service";
 import {PersonInfo} from "../../domain/person-info";
 import {PersonInfoService} from "../../service/person-info.service";
 import {mergeMap, Subscription, tap} from "rxjs";
+import {CaseRecordStatus} from "../../domain/case-record-status";
 
 export class SimpleKeyValue{
   key: string;
@@ -82,23 +83,8 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
       }
     );
   }
-
-  stopTimer(){
-    this.time = 0;
-  }
-
-  startTimer() {
-    if(!this.interval){
-      this.interval = setInterval(() => {
-        this.time++;
-      },1000);
-    }
-
-  }
-
   onQueryRecord(recordId: number) {
     this.isLoadingTriggerData = true;
-    this.startTimer();
     this.setLoadingDataMessage("Query Record Operation Running. Time Elapsed: ")
     this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
       .pipe(
@@ -123,13 +109,11 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
           const personInfo = new PersonInfo(value, this.utilsService);
           this.personInfoService.setPersonInfo(personInfo);
           this.setLoadingDataMessage();
-          this.stopTimer();
         },
         error: err => {
           console.error(err);
           this.isLoadingTriggerData = false;
           this.setLoadingDataMessage("Server Error Occurred");
-          this.stopTimer();
         }
       });
   }
@@ -155,10 +139,11 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
     this.isLoadingTriggerData = false;
     this.triggerSubscription$?.unsubscribe();
     this.setLoadingDataMessage();
-    this.stopTimer();
   }
 
   onRefreshRecord(recordId: number) {
     this.getCaseRecordDetails(recordId);
   }
+
+  protected readonly CaseRecordStatus = CaseRecordStatus;
 }
