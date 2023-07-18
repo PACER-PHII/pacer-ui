@@ -27,8 +27,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<CaseRecordDTO>;
   triggerSubscription$: Subscription;
   isLargeScreenMode: boolean = true;
-  isLoadingTriggerData: boolean = false;
-  loadingDataMessage: boolean = false;
   time: number = 0;
   interval;
 
@@ -102,10 +100,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/record-history', record.recordId]);
   }
 
-  stopTimer(){
-    this.time = 0;
-  }
-
   startTimer() {
     if(!this.interval){
       this.interval = setInterval(() => {
@@ -116,7 +110,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   onQueryRecord(recordId: number) {
-    this.isLoadingTriggerData = true;
     this.startTimer();
     this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
       .pipe(
@@ -134,28 +127,19 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         mergeMap(() => this.caseRecordService.checkSecondaryTriggerResult(recordId)),
       ).subscribe({
         next: value => {
-          this.isLoadingTriggerData = false;
-          this.stopTimer();
           const caseRecordDTO = new CaseRecordDTO(value, this.utilsService, false);
           this.refreshDataSourceData(caseRecordDTO);
 
         },
         error: err => {
           console.error(err);
-          this.isLoadingTriggerData = false;
-          this.stopTimer();
         }
       });
   }
 
   private refreshDataSourceData(caseDto: CaseRecordDTO) {
-    // const caseDto = new CaseRecordDTO(value, this.utilsService);
-    // caseDto.isRefreshRunning = true;
-    console.log(caseDto);
     this.dataSource.data = this.dataSource.data.map(record => (record.recordId  == caseDto.recordId) ? caseDto: record);
-    console.log(this.dataSource.data);
   }
-
 
   onAutoRefresh(record: CaseRecordDTO) {
     record.isRefreshing = true;
