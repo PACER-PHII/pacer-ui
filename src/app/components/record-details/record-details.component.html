@@ -8,8 +8,8 @@
         <mat-icon>history</mat-icon>
         View History
       </button>
-      <span style="margin: auto 0"  *ngIf="loadingDataMessage">The Record is Auto Refreshing</span>
-      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="loadingDataMessage" mode="indeterminate"></mat-progress-bar>
+      <span style="margin: auto 0"  *ngIf="isLoadingTriggerData">The Record is Auto Refreshing</span>
+      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData" mode="indeterminate"></mat-progress-bar>
       <div>
         <button mat-raised-button (click)="onRefreshRecord(recordId);" *ngIf="!isLoading" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
           <mat-icon>sync</mat-icon>

@@ -35,7 +35,6 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
   isLoadingTriggerData: boolean = false;
   isLoading: boolean = false;
   readonly NO_DATA_TO_DISPLAY = "No data to display.";
-  loadingDataMessage: string = '';
 
   constructor(
     public route: ActivatedRoute,
@@ -77,13 +76,13 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
         error: err => {
           console.error(err);
           this.isLoading = false;
+          this.utilsService.showErrorNotification();
         }
       }
     );
   }
   onQueryRecord(recordId: number) {
     this.isLoadingTriggerData = true;
-    this.setLoadingDataMessage("Query Record Operation Running. Time Elapsed: ")
     this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
       .pipe(
         mergeMap(() => this.caseRecordService.checkInitialTriggerResult(recordId).pipe(
@@ -95,7 +94,7 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
             },
             error: err => {
               console.error(err);
-              this.setLoadingDataMessage("Server Error Occurred");
+              this.utilsService.showErrorNotification();
             }
           }),
         )),
@@ -106,12 +105,11 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
           this.caseDetails = value;
           const personInfo = new PersonInfo(value, this.utilsService);
           this.personInfoService.setPersonInfo(personInfo);
-          this.setLoadingDataMessage();
         },
         error: err => {
           console.error(err);
           this.isLoadingTriggerData = false;
-          this.setLoadingDataMessage("Server Error Occurred");
+          this.utilsService.showErrorNotification();
         }
       });
   }
@@ -129,19 +127,14 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
     })
   }
 
-  setLoadingDataMessage(message?: string){
-    this.loadingDataMessage = message ?? '';
-  }
 
   onCancelRecordRefresh(recordId: number) {
     this.isLoadingTriggerData = false;
     this.triggerSubscription$?.unsubscribe();
-    this.setLoadingDataMessage();
   }
 
   onRefreshRecord(recordId: number) {
     this.getCaseRecordDetails(recordId);
   }
 
-  protected readonly CaseRecordStatus = CaseRecordStatus;
 }

@@ -17,6 +17,7 @@ import {CaseRecordStatus} from "../../domain/case-record-status";
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
+  protected readonly CaseRecordStatus = CaseRecordStatus;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -52,11 +53,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
           this.dataSource.paginator = this.paginator;
         },
         error: (error) => {
-          this.snackBar.open("Unable to load records. Server error.", 'x' ,{
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            panelClass: ['error-color']
-          });
+          this.utilsService.showErrorNotification();
           this.isLoading = false;
         },
         complete: () => {
@@ -121,6 +118,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             },
             error: err => {
               console.error(err);
+              this.utilsService.showErrorNotification();
             }
           }),
         )),
@@ -133,6 +131,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         },
         error: err => {
           console.error(err);
+          this.utilsService.showErrorNotification();
         }
       });
   }
@@ -150,11 +149,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this.refreshDataSourceData(caseRecordDTO)
       },
       error: err => {
-        console.error(err)
+        console.error(err);
+        this.utilsService.showErrorNotification();
       }
     })
   }
-
-  protected readonly CaseRecordStatus = CaseRecordStatus;
 
 }

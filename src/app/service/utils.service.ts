@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {CaseRecordStatus} from "../domain/case-record-status";
 import {AdministrativeSex} from "../domain/admnistrative-sex";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  constructor() { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   getMedicalRecordNumber(patient): number | null{
     return patient?.ID?.[0]?.value ?? null
@@ -125,5 +126,23 @@ export class UtilsService {
 
   deepCopy(value: any){
     return JSON.parse(JSON.stringify(value));
+  }
+
+  showErrorNotification(messageStr: string = 'Server Error.'){
+    this._snackBar.open(messageStr, 'x' ,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ["error-message"],
+      duration: 10000
+    });
+  }
+
+  showSuccessNotification(messageStr: string){
+    this._snackBar.open(messageStr, 'x' ,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['mat-toolbar', 'mat-primary'],
+      duration: 5000
+    });
   }
 }

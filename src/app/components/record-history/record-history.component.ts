@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CaseRecordService} from "../../service/case-record.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PersonInfo} from "../../domain/person-info";
@@ -9,6 +9,7 @@ import {CaseRecordStatus} from "../../domain/case-record-status";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
+import {mergeMap, Subscription, tap} from "rxjs";
 
 
 export class RecordHistoryTableView{
@@ -39,7 +40,7 @@ export class RecordHistoryTableView{
     ]),
   ],
 })
-export class RecordHistoryComponent implements OnInit {
+export class RecordHistoryComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,6 +54,9 @@ export class RecordHistoryComponent implements OnInit {
   selectedSections: { selected: boolean, name: string}[];
   sections: { selected: boolean, name: string }[];
   recordId = parseInt(this.route.snapshot.params['id']);
+  isLoadingTriggerData: boolean = false;
+  isLoading: boolean = false;
+  triggerSubscription$: Subscription;
 
   constructor(
     private caseRecordService: CaseRecordService,
@@ -63,6 +67,11 @@ export class RecordHistoryComponent implements OnInit {
   ) {
   }
 
+  ngOnDestroy(): void {
+    this.triggerSubscription$?.unsubscribe();
+  }
+
+
   getFilterSections(parsedRecordHistory): any {
     return Array.from(
       new Set(parsedRecordHistory.map(record => record.source))
@@ -71,8 +80,8 @@ export class RecordHistoryComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
-    this.caseRecordService.getRecordHistoryById(this.recordId).subscribe({
+  getRecordHistory(recordId){
+    this.caseRecordService.getRecordHistoryById(recordId).subscribe({
       next: value => {
         this.recordHistory = value;
         this.parsedRecordHistory= value.map(record => {
@@ -90,10 +99,12 @@ export class RecordHistoryComponent implements OnInit {
 
         this.sections = this.getFilterSections(this.parsedRecordHistory);
         this.selectedSections = this.getFilterSections(this.parsedRecordHistory);
-        },
+      },
       error: err => console.error(JSON.stringify(err))
     });
+  }
 
+  getRecordDetails(recordId){
     this.caseRecordService.getRecordDetailsById(this.recordId).subscribe(
       (response: any) => {
         const personInfo = new PersonInfo(response, this.utilsService);
@@ -101,8 +112,40 @@ export class RecordHistoryComponent implements OnInit {
       });
   }
 
-  onQueryRecord() {
+  ngOnInit(): void {
+    this.getRecordHistory(this.recordId);
+    this.getRecordDetails(this.recordId);
+  }
 
+  onQueryRecord(recordId: number) {
+    this.isLoadingTriggerData = true;
+    this.triggerSubscription$ = this.caseRecordService.triggerRecord(recordId)
+      .pipe(
+        mergeMap(() => this.caseRecordService.checkInitialTriggerResult(recordId).pipe(
+          tap({
+            next: value => {
+              const personInfo = new PersonInfo(value, this.utilsService);
+              this.personInfoService.setPersonInfo(personInfo);
+            },
+            error: err => {
+              console.error(err);
+              this.utilsService.showErrorNotification();
+            }
+          }),
+        )),
+        mergeMap(() => this.caseRecordService.checkSecondaryTriggerResult(recordId)),
+      ).subscribe({
+        next: value => {
+          this.isLoadingTriggerData = false;
+          const personInfo = new PersonInfo(value, this.utilsService);
+          this.personInfoService.setPersonInfo(personInfo);
+        },
+        error: err => {
+          console.error(err);
+          this.isLoadingTriggerData = false;
+          this.utilsService.showErrorNotification();
+        }
+      });
   }
   onSectionSelectionChange(selections) {
     let filter ='';
@@ -119,5 +162,14 @@ export class RecordHistoryComponent implements OnInit {
 
   onViewRecordDetails() {
     this.router.navigate(['/record-details', this.recordId]);
+  }
+
+  onCancelRecordRefresh(recordId: number) {
+    this.isLoadingTriggerData = false;
+    this.triggerSubscription$?.unsubscribe();
+  }
+
+  onRefreshRecord(recordId: number) {
+    this.getRecordDetails(recordId);
   }
 }
