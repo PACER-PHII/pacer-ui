@@ -37,8 +37,6 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
   readonly NO_DATA_TO_DISPLAY = "No data to display.";
   loadingDataMessage: string = '';
 
-  time: number = 0;
-  interval;
   constructor(
     public route: ActivatedRoute,
     private caseRecordService: CaseRecordService,
