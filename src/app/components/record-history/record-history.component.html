@@ -41,7 +41,7 @@
         <td mat-cell *matCellDef="let record" [attr.colspan]="columnsToDisplayWithExpand.length">
           <div class="record-detail"
                [@detailExpand]="record == expandedRecord ? 'expanded' : 'collapsed'">
-            <app-record-details-container [expandCollapseBtnsVisible]=false [caseDetails]="record" style="width: 100%; padding: 8px 8px;">
+            <app-record-details-container [expandCollapseBtnsVisible]=false [caseDetails]="record?.resource" style="width: 100%; padding: 8px 8px;">
             </app-record-details-container>
           </div>
         </td>
