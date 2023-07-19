@@ -18,6 +18,10 @@ tr.record-row:not(.expanded-row):active {
   border-bottom-width: 0;
 }
 
+.significant-diff td {
+  font-weight: bold
+}
+
 .record-detail {
   overflow: hidden;
   display: flex;

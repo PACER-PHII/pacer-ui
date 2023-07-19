@@ -18,13 +18,14 @@ export class RecordHistoryTableView{
   date: Date;
   diagnosis: string;
   resource: any;
-  sections: string[];
+  timeDiffDetected: boolean;
   constructor(record: any, utilsService){
     this.date = record.date;
     this.source = record.source?.toUpperCase();
     this.status = utilsService.getStatus(record?.data);
     this.diagnosis = utilsService.getDiagnosisDisplayValue(record?.data?.Patient?.Diagnosis);
     this.resource = record?.data;
+    this.timeDiffDetected = false;
   }
 }
 
@@ -85,9 +86,20 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
     this.caseRecordService.getRecordHistoryById(recordId).subscribe({
       next: value => {
         this.recordHistory = value;
-        this.parsedRecordHistory= value.map(record => {
+        this.parsedRecordHistory = value.map(record => {
           return new RecordHistoryTableView(record, this.utilsService)
+        })
+          .sort((a,b) =>
+           new Date(b.date).getTime() - new Date(a.date).getTime());
+
+        this.parsedRecordHistory.forEach((record,  i)=> {
+          const index = i+1;
+          if (index < this.parsedRecordHistory.length) {
+            const monthDiff = this.monthDiff(new Date(this.parsedRecordHistory[index].date), new Date(record.date));
+            record.timeDiffDetected = monthDiff >= 3
+          }
         });
+
         this.dataSource = new MatTableDataSource<RecordHistoryTableView>(this.parsedRecordHistory);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -101,6 +113,7 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
         this.sections = this.getFilterSections(this.parsedRecordHistory);
         this.selectedSections = this.getFilterSections(this.parsedRecordHistory);
         this.errorMessageStr = this.recordHistory?.[0].data?.StatusLog;
+
       },
       error: err => {
         console.error(JSON.stringify(err));
@@ -179,7 +192,7 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
   }
 
   monthDiff(dateFrom, dateTo) {
-    return dateTo.getMonth() - dateFrom.getMonth() +
-      (12 * (dateTo.getFullYear() - dateFrom.getFullYear()))
+    return Math.abs (dateTo.getMonth() - dateFrom.getMonth() +
+      (12 * (dateTo.getFullYear() - dateFrom.getFullYear())))
   }
 }
