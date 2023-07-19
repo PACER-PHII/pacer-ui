@@ -33,7 +33,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
  A detailed instructions of how to deploy angular app on IIS server can be found here: https://levelup.gitconnected.com/how-to-deploy-angular-app-to-an-iis-web-server-complete-setup-337997486423
 
 1. Download Microsoft Remote Desktop
-2. Login with you username and password credentials to [http://yellowisland01.icl.gtri.org](http://yellowisland01.icl.gtri.org). Hint: your username should be in the format: `gtri username`+`a`, there `a` is a character appended to your username.
+2. Login with you username and password credentials to [http://yellowisland01.icl.gtri.org](http://yellowisland01.icl.gtri.org). Hint: your username should be in the format: `gtri_username`+`a`, there `a` is a character appended to your username.
 3. Open the IIS manager. You can do so by typing "iis man" in the searchbar.
 4. Find the pacerui deployment directory, and open a terminal at the location.
 5. Pull the code from the github repository [https://github.com/gt-health/pacer-ui.git](https://github.com/gt-health/pacer-ui.git)
