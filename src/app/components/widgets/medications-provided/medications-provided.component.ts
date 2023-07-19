@@ -1,9 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {AppConstants} from "../../../providers/app-constants";
-import {SimpleKeyValue} from "../../record-details/record-details.component";
-import {MatSort} from "@angular/material/sort";
-import {MatTableDataSource} from "@angular/material/table";
-import {CaseRecordDTO} from "../../../domain/case-record-dto";
+import {SimpleKeyValue} from "../../../domain/simple-key-value";
+
 
 export class SimpleMedProvided{
   source: string;

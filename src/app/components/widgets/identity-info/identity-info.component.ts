@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
-import {SimpleKeyValue} from "../../record-details/record-details.component";
 import {AppConstants} from "../../../providers/app-constants";
+import {SimpleKeyValue} from "../../../domain/simple-key-value";
 
 @Component({
   selector: 'app-identity-info',

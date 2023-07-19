@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {AppConstants} from "../../../providers/app-constants";
-import {SimpleKeyValue} from "../../record-details/record-details.component";
+import {SimpleKeyValue} from "../../../domain/simple-key-value";
 
 @Component({
   selector: 'app-immunization-history',

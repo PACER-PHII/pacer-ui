@@ -9,14 +9,6 @@ import {PersonInfoService} from "../../service/person-info.service";
 import {mergeMap, Subscription, tap} from "rxjs";
 import {CaseRecordStatus} from "../../domain/case-record-status";
 
-export class SimpleKeyValue{
-  key: string;
-  value: string;
-  constructor(key, value){
-    this.key = key ?? '';
-    this.value = value ?? '';
-  }
-}
 
 @Component({
   selector: 'app-record-details',
