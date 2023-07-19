@@ -35,6 +35,7 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
   isLoadingTriggerData: boolean = false;
   isLoading: boolean = false;
   readonly NO_DATA_TO_DISPLAY = "No data to display.";
+  errorMessageStr: string = '';
 
   constructor(
     public route: ActivatedRoute,
@@ -105,6 +106,9 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
           this.caseDetails = value;
           const personInfo = new PersonInfo(value, this.utilsService);
           this.personInfoService.setPersonInfo(personInfo);
+          if(value.status?.toLowerCase() == 'error'){
+            this.setErrorMessage(this.recordId);
+          }
         },
         error: err => {
           console.error(err);
@@ -127,7 +131,6 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
     })
   }
 
-
   onCancelRecordRefresh(recordId: number) {
     this.isLoadingTriggerData = false;
     this.triggerSubscription$?.unsubscribe();
@@ -137,4 +140,9 @@ export class RecordDetailsComponent implements OnInit, OnDestroy{
     this.getCaseRecordDetails(recordId);
   }
 
+  private setErrorMessage(recordId: number) {
+    this.caseRecordService.getRecordDetailsById(recordId).subscribe({
+      next: value => this.errorMessageStr = value?.[0]?.data?.StatusLog
+    })
+  }
 }

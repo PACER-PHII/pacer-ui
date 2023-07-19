@@ -64,7 +64,7 @@ Give some space to the snackbar container. Google does not plan to allow for ver
 See https://github.com/angular/components/issues/23737 for more info
 */
 .mat-snack-bar-container {
-  margin-top: 10vh !important;
+  margin-top: 20vh !important;
 }
 
 .box {
@@ -87,3 +87,6 @@ See https://github.com/angular/components/issues/23737 for more info
   font-size: x-large;
   justify-content: center;
 }
+
+//// This changes to position of the snackbar and aligns the snackbar to the center of the screen
+//.cdk-global-overlay-wrapper { align-items: center !important; }

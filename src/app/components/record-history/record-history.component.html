@@ -7,6 +7,7 @@
         <mat-icon>table_view</mat-icon>
         View Details
       </button>
+      <span style="color:red; margin: auto 0" *ngIf="errorMessageStr && !isLoadingTriggerData">{{ errorMessageStr }}</span>
       <span style="margin: auto 0"  *ngIf="isLoadingTriggerData">The Record is Auto Refreshing</span>
       <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData" mode="indeterminate"></mat-progress-bar>
       <div>

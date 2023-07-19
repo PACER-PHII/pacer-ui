@@ -57,6 +57,7 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
   isLoadingTriggerData: boolean = false;
   isLoading: boolean = false;
   triggerSubscription$: Subscription;
+  errorMessageStr: string ='';
 
   constructor(
     private caseRecordService: CaseRecordService,
@@ -99,8 +100,12 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
 
         this.sections = this.getFilterSections(this.parsedRecordHistory);
         this.selectedSections = this.getFilterSections(this.parsedRecordHistory);
+        this.errorMessageStr = this.recordHistory?.[0].data?.StatusLog;
       },
-      error: err => console.error(JSON.stringify(err))
+      error: err => {
+        console.error(JSON.stringify(err));
+        this.utilsService.showErrorNotification();
+      }
     });
   }
 
@@ -171,5 +176,10 @@ export class RecordHistoryComponent implements OnInit, OnDestroy {
 
   onRefreshRecord(recordId: number) {
     this.getRecordDetails(recordId);
+  }
+
+  monthDiff(dateFrom, dateTo) {
+    return dateTo.getMonth() - dateFrom.getMonth() +
+      (12 * (dateTo.getFullYear() - dateFrom.getFullYear()))
   }
 }

@@ -132,7 +132,7 @@ export class UtilsService {
     this._snackBar.open(messageStr, 'x' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ["error-message"],
+      panelClass: ["error-message", "mat-snack-bar-container"],
       duration: 10000
     });
   }
@@ -141,7 +141,7 @@ export class UtilsService {
     this._snackBar.open(messageStr, 'x' ,{
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['mat-toolbar', 'mat-primary'],
+      panelClass: ['mat-toolbar', 'mat-primary', "mat-snack-bar-container"],
       duration: 5000
     });
   }

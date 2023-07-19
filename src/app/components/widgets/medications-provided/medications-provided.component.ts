@@ -33,15 +33,8 @@ export class MedicationsProvidedComponent implements OnChanges{
   @Input() recordDetails: any;
   @Input() recordHistory: any;
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  dataSource: MatTableDataSource<SimpleMedProvided>;
-
   medicationsProvided: any[];
   medicationHistory: SimpleMedProvided[] = [];
-
-  displayedColumns: string[] = ['source', 'date', 'code', 'system', 'display', 'dosage', 'frequency'];
-  historyVisible: boolean = false;
 
   constructor(public appConstants: AppConstants){}
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,8 +44,6 @@ export class MedicationsProvidedComponent implements OnChanges{
 
     if(changes['recordHistory']?.currentValue){
       this.medicationHistory = this.getMedicationHistory(this.recordHistory);
-      this.dataSource = new MatTableDataSource<SimpleMedProvided>(this.medicationHistory);
-      this.dataSource.sort = this.sort;
     }
   }
 

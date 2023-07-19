@@ -8,8 +8,9 @@
         <mat-icon>history</mat-icon>
         View History
       </button>
-      <span style="margin: auto 0"  *ngIf="isLoadingTriggerData">The Record is Auto Refreshing</span>
-      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData" mode="indeterminate"></mat-progress-bar>
+      <span style="color:red; margin: auto 0" *ngIf="errorMessageStr && !isLoadingTriggerData">{{ errorMessageStr }}</span>
+      <span style="margin: auto 0"  *ngIf="isLoadingTriggerData && !errorMessageStr">The Record is Auto Refreshing</span>
+      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData && !errorMessageStr" mode="indeterminate"></mat-progress-bar>
       <div>
         <button mat-raised-button (click)="onRefreshRecord(recordId);" *ngIf="!isLoading" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
           <mat-icon>sync</mat-icon>
@@ -28,7 +29,8 @@
     <div class="top-margin">
       <app-record-details-container
         [recordHistory]="recordHistory"
-        [caseDetails]="caseDetails"></app-record-details-container>
+        [caseDetails]="caseDetails">
+      </app-record-details-container>
     </div>
   </div>
 </div>
