@@ -47,7 +47,7 @@ export class MedicationsProvidedComponent implements OnChanges{
 
   private getProvidedMedications(recordDetails: any) {
     let nestedArrayList = []
-    recordDetails['Medication Provided']?.forEach(medication => {
+    recordDetails?.['Patient']?.['Medication Provided']?.forEach(medication => {
       let arrayList: any[] = [];
       for (const key in medication) {
         if(key == 'Dosage'){
@@ -75,7 +75,6 @@ export class MedicationsProvidedComponent implements OnChanges{
     )
       .flat(1)
       .map(record => new SimpleMedProvided(record.medication, record.source, record.date));
-
     return medsProvided;
   }
 }

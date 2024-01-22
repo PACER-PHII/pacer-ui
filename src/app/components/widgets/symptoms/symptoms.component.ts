@@ -20,7 +20,7 @@ export class SymptomsComponent implements OnChanges{
 
   private getSymptoms(recordDetails: any) {
     let nestedArrayList = []
-    recordDetails['Symptoms']?.forEach(medication => {
+    recordDetails?.['Patient']?.['Symptoms']?.forEach(medication => {
       let arrayList: any[] = [];
       for (const key in medication) {
         const object = new SimpleKeyValue(key, medication[key]);

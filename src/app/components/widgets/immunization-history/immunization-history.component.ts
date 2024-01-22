@@ -13,14 +13,15 @@ export class ImmunizationHistoryComponent implements OnChanges{
 
   constructor(public appConstants: AppConstants){}
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['immunizationHistory']?.currentValue){
+    if(changes['recordDetails']?.currentValue){
       this.immunizationHistory = this.getImmunizationHistory(this.recordDetails);
     }
   }
 
   private getImmunizationHistory(recordDetails: any) {
     let nestedArrayList = []
-    recordDetails.Immunization_History?.forEach(immunizationRecord => {
+    recordDetails?.['Patient']?.['Immunization_History'].forEach(immunizationRecord => {
+      console.log(immunizationRecord);
       let arrayList: any[] = [];
       for (const key in immunizationRecord) {
         const object = new SimpleKeyValue(key, immunizationRecord[key]);
