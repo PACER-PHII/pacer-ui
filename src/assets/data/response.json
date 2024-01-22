@@ -132,7 +132,14 @@
       }
     ],
     "Placer_Order_Code": "",
-    "Diagnosis": [],
+    "Diagnosis": [
+      {
+        "Code": "A56.3",
+        "System": "urn:oid:2.16.840.1.113883.6.90",
+        "Display": "Chlamydial infection of anus and rectum",
+        "Date": "Sat Apr 11 06:47:33 UTC 2020"
+      }
+    ],
     "Medication Provided": [
       {
         "Code": "82122",
