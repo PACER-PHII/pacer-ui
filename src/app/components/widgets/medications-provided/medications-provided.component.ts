@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {AppConstants} from "../../../providers/app-constants";
 import {SimpleKeyValue} from "../../../domain/simple-key-value";
 
