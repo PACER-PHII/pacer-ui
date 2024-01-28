@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "pacer-ui:build:production"
+              "buildTarget": "pacer-ui:build:production"
             },
             "development": {
-              "browserTarget": "pacer-ui:build:development"
+              "buildTarget": "pacer-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pacer-ui:build"
+            "buildTarget": "pacer-ui:build"
           }
         },
         "test": {
