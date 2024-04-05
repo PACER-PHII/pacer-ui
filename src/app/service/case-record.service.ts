@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, map, repeat, takeWhile, takeLast} from "rxjs";
+import {Observable, map, repeat, takeWhile, takeLast, concatMap, from, scan, tap, catchError, of} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {CaseRecordDTO} from "../domain/case-record-dto";
 import {UtilsService} from "./utils.service";
@@ -10,15 +10,34 @@ import {EnvironmentHandlerService} from "./environment-handler.service";
 })
 export class CaseRecordService {
 
+
   constructor(
     private http: HttpClient,
     private utilsService: UtilsService,
     private environmentHandler: EnvironmentHandlerService) { }
 
-  getCaseRecordsList():  Observable<CaseRecordDTO[]> {
-    return this.http.get(this.environmentHandler.getBaseApiURL() + 'ecr-manager/ECR').pipe(map((resultList: any) =>
+  getCaseRecordsList(page: number = 0):  Observable<CaseRecordDTO[]> {
+    return this.http.get(this.environmentHandler.getBaseApiURL() + 'ecr-manager/ECR?page=' + page).pipe(map((resultList: any) =>
         resultList.map(result => new CaseRecordDTO(result, this.utilsService))
       ),
+    );
+  };
+
+
+  getRecords(currentPage = 0): Observable<CaseRecordDTO[]> {
+    return this.http.get(`${this.environmentHandler.getBaseApiURL()}ecr-manager/ECR?page=${currentPage}`).pipe(
+      map((data: any) => data.map(element => new CaseRecordDTO(element, this.utilsService))),
+      takeWhile((data: any) => data.length === 50, true),
+      concatMap((data) => {
+        if (data.length === 50) {
+          return this.getRecords(currentPage + 1).pipe(
+            // Merge data from current and subsequent pages
+            map((nextData) => data.concat(nextData))
+          );
+        } else {
+          return of(data); // Return current page data if less than 50 elements
+        }
+      }),
     );
   };
 
