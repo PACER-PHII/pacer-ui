@@ -43,29 +43,24 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.triggerSubscription$?.unsubscribe();
   }
 
-  getCaseRecords(): void {
-    this.isLoading = true;
-    this.loadDataObservable$ = this.caseRecordService.getCaseRecordsList().subscribe({
-        next: (response: CaseRecordDTO[]) => {
-          this.dataSource = new MatTableDataSource<CaseRecordDTO>(response);
-          this.isLoading = false;
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        },
-        error: (error) => {
-          this.utilsService.showErrorNotification();
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
+  getAllRecords(){
+    this.isLoading = false;
+    this.caseRecordService.getRecords().subscribe({
+      next: data => {
+        this.dataSource = new MatTableDataSource<CaseRecordDTO>(data);
+        this.isLoading = false;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }, error : err => {
+        this.isLoading = false;
+        this.utilsService.showErrorNotification("Server error detected")
+        console.error(err)
       }
-    );
+    })
   }
 
   ngOnInit(): void {
-    this.getCaseRecords();
-    console.log(this.responsive);
+    this.getAllRecords();
     this.responsive.observe([
       Breakpoints.Handset,
       Breakpoints.Tablet,
