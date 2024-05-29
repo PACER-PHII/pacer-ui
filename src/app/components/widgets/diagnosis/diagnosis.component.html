@@ -1,14 +1,22 @@
-<div *ngIf="!diagnosis?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+@if (!diagnosis?.length) {
+  <div>{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+}
 <table>
   <thead>
-  <tr>
-    <th *ngFor="let item of diagnosis?.[0]">{{ item.key }}</th>
-  </tr>
+    <tr>
+      @for (item of diagnosis?.[0]; track item) {
+        <th>{{ item.key }}</th>
+      }
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let row of diagnosis">
-    <td *ngFor="let item of row">{{ item.value  | dateValue }}</td>
-  </tr>
+    @for (row of diagnosis; track row) {
+      <tr>
+        @for (item of row; track item) {
+          <td>{{ item.value  | dateValue }}</td>
+        }
+      </tr>
+    }
   </tbody>
 </table>
 

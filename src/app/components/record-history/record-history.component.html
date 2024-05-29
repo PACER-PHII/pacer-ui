@@ -7,40 +7,54 @@
         <mat-icon>table_view</mat-icon>
         View Details
       </button>
-      <span style="color:red; margin: auto 0" *ngIf="errorMessageStr && !isLoadingTriggerData">{{ errorMessageStr }}</span>
-      <span style="margin: auto 0"  *ngIf="isLoadingTriggerData">The Record is Auto Refreshing</span>
-      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData" mode="indeterminate"></mat-progress-bar>
+      @if (errorMessageStr && !isLoadingTriggerData) {
+        <span style="color:red; margin: auto 0">{{ errorMessageStr }}</span>
+      }
+      @if (isLoadingTriggerData) {
+        <span style="margin: auto 0" >The Record is Auto Refreshing</span>
+      }
+      @if (isLoadingTriggerData) {
+        <mat-progress-bar style="max-width: 30%; margin: auto 0" mode="indeterminate"></mat-progress-bar>
+      }
       <div>
-        <button mat-raised-button (click)="onRefreshRecord(recordId);" *ngIf="!isLoading" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
-          <mat-icon>sync</mat-icon>
-          Reload Record
-        </button>
-        <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn" *ngIf="!isLoadingTriggerData">
-          <mat-icon>bolt</mat-icon>
-          Query Record
-        </button>
-        <button mat-raised-button (click)="onCancelRecordRefresh(recordId);" color="primary" *ngIf="isLoadingTriggerData">
-          <mat-icon>cancel</mat-icon>
-          Stop Auto Refresh
-        </button>
+        @if (!isLoading) {
+          <button mat-raised-button (click)="onRefreshRecord(recordId);" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
+            <mat-icon>sync</mat-icon>
+            Reload Record
+          </button>
+        }
+        @if (!isLoadingTriggerData) {
+          <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn">
+            <mat-icon>bolt</mat-icon>
+            Query Record
+          </button>
+        }
+        @if (isLoadingTriggerData) {
+          <button mat-raised-button (click)="onCancelRecordRefresh(recordId);" color="primary">
+            <mat-icon>cancel</mat-icon>
+            Stop Auto Refresh
+          </button>
+        }
       </div>
     </div>
   </div>
 
   <div style="margin: 16px 0"> Filter by:
-    <span style="margin-right: 16px" *ngFor="let selection of selectedSections">
-      <mat-checkbox [(ngModel)]="selection.selected" (change)="onSectionSelectionChange(selectedSections)">
-        {{selection.name}}
-      </mat-checkbox>
-    </span>
+    @for (selection of selectedSections; track selection) {
+      <span style="margin-right: 16px">
+        <mat-checkbox [(ngModel)]="selection.selected" (change)="onSectionSelectionChange(selectedSections)">
+          {{selection.name}}
+        </mat-checkbox>
+      </span>
+    }
 
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z1"
-           style="margin: 16px 0" matSortActive="date" matSortDirection="desc">
+      style="margin: 16px 0" matSortActive="date" matSortDirection="desc">
 
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let record" [attr.colspan]="columnsToDisplayWithExpand.length">
           <div class="record-detail"
-               [@detailExpand]="record == expandedRecord ? 'expanded' : 'collapsed'">
+            [@detailExpand]="record == expandedRecord ? 'expanded' : 'collapsed'">
             <app-record-details-container [expandCollapseBtnsVisible]=false [caseDetails]="record?.resource" style="width: 100%; padding: 8px 8px;">
             </app-record-details-container>
           </div>
@@ -59,7 +73,9 @@
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
         <td mat-cell *matCellDef="let record"> {{ record.date | date: 'MMM d, yyyy, HH:mm' }}
-        <mat-icon *ngIf="record.timeDiffDetected" matTooltip="The difference in time is greater then 3 monts">info</mat-icon>
+          @if (record.timeDiffDetected) {
+            <mat-icon matTooltip="The difference in time is greater then 3 monts">info</mat-icon>
+          }
         </td>
       </ng-container>
 
@@ -77,9 +93,13 @@
         <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
         <td mat-cell *matCellDef="let record">
           <button mat-icon-button aria-label="expand row"
-                  (click)="(expandedRecord = expandedRecord === record ? null : record); $event.stopPropagation()">
-            <mat-icon *ngIf="expandedRecord !== record">keyboard_arrow_down</mat-icon>
-            <mat-icon *ngIf="expandedRecord === record">keyboard_arrow_up</mat-icon>
+            (click)="(expandedRecord = expandedRecord === record ? null : record); $event.stopPropagation()">
+            @if (expandedRecord !== record) {
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            }
+            @if (expandedRecord === record) {
+              <mat-icon>keyboard_arrow_up</mat-icon>
+            }
           </button>
         </td>
       </ng-container>
@@ -87,10 +107,10 @@
       <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
 
       <tr mat-row *matRowDef="let record; columns: columnsToDisplayWithExpand;"
-          class="record-row"
-          [ngClass]="record.timeDiffDetected ? 'significant-diff' : ''"
-          [class.example-expanded-row]="expandedRecord === record"
-          (click)="expandedRecord = expandedRecord === record ? null : record">
+        class="record-row"
+        [ngClass]="record.timeDiffDetected ? 'significant-diff' : ''"
+        [class.example-expanded-row]="expandedRecord === record"
+        (click)="expandedRecord = expandedRecord === record ? null : record">
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       <tr class="mat-row" *matNoDataRow>

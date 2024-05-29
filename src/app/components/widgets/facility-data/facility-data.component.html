@@ -1,7 +1,11 @@
-<div *ngIf="!facilityData?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+@if (!facilityData?.length) {
+  <div>{{appConstants.NO_DATA_TO_DISPLAY}}</div>
+}
 <table>
-  <tr *ngFor=" let row of facilityData">
-    <td class="title-width">{{ row.key }}</td>
-    <td>{{ row.value || ''}}</td>
-  </tr>
+  @for ( row of facilityData; track  row) {
+    <tr>
+      <td class="title-width">{{ row.key }}</td>
+      <td>{{ row.value || ''}}</td>
+    </tr>
+  }
 </table>

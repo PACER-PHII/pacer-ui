@@ -1,16 +1,18 @@
 
 
 <mat-accordion multi>
-  <div style="margin-bottom: 8px" *ngIf="expandCollapseBtnsVisible">
-    <button mat-stroked-button (click)="accordion.openAll()">
-      <mat-icon>expand_more</mat-icon>
-      Expand All
-    </button>
-    <button mat-stroked-button style="margin-left: 16px" (click)="accordion.closeAll()">
-      <mat-icon>expand_less</mat-icon>
-      Collapse All
-    </button>
-  </div>
+  @if (expandCollapseBtnsVisible) {
+    <div style="margin-bottom: 8px">
+      <button mat-stroked-button (click)="accordion.openAll()">
+        <mat-icon>expand_more</mat-icon>
+        Expand All
+      </button>
+      <button mat-stroked-button style="margin-left: 16px" (click)="accordion.closeAll()">
+        <mat-icon>expand_less</mat-icon>
+        Collapse All
+      </button>
+    </div>
+  }
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
