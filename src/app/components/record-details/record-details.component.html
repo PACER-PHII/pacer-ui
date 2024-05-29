@@ -4,26 +4,38 @@
     <div class="box page-title">Record Details</div>
     <div class="box" style="justify-content: space-between; margin-top: 24px">
       <button mat-raised-button color="primary"
-              (click)="onViewRecordHistory()">
+        (click)="onViewRecordHistory()">
         <mat-icon>history</mat-icon>
         View History
       </button>
-      <span style="color:red; margin: auto 0" *ngIf="errorMessageStr && !isLoadingTriggerData">{{ errorMessageStr }}</span>
-      <span style="margin: auto 0"  *ngIf="isLoadingTriggerData && !errorMessageStr">The Record is Auto Refreshing</span>
-      <mat-progress-bar style="max-width: 30%; margin: auto 0" *ngIf="isLoadingTriggerData && !errorMessageStr" mode="indeterminate"></mat-progress-bar>
+      @if (errorMessageStr && !isLoadingTriggerData) {
+        <span style="color:red; margin: auto 0">{{ errorMessageStr }}</span>
+      }
+      @if (isLoadingTriggerData && !errorMessageStr) {
+        <span style="margin: auto 0" >The Record is Auto Refreshing</span>
+      }
+      @if (isLoadingTriggerData && !errorMessageStr) {
+        <mat-progress-bar style="max-width: 30%; margin: auto 0" mode="indeterminate"></mat-progress-bar>
+      }
       <div>
-        <button mat-raised-button (click)="onRefreshRecord(recordId);" *ngIf="!isLoading" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
-          <mat-icon>sync</mat-icon>
-          Reload Record
-        </button>
-        <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn" *ngIf="!isLoadingTriggerData">
-          <mat-icon>bolt</mat-icon>
-          Query Record
-        </button>
-        <button mat-raised-button (click)="onCancelRecordRefresh(recordId);" color="primary" *ngIf="isLoadingTriggerData">
-          <mat-icon>cancel</mat-icon>
-          Stop Auto Refresh
-        </button>
+        @if (!isLoading) {
+          <button mat-raised-button (click)="onRefreshRecord(recordId);" style="margin-right: 8px" [disabled]="isLoadingTriggerData">
+            <mat-icon>sync</mat-icon>
+            Reload Record
+          </button>
+        }
+        @if (!isLoadingTriggerData) {
+          <button mat-raised-button (click)="onQueryRecord(recordId);" color="warn">
+            <mat-icon>bolt</mat-icon>
+            Query Record
+          </button>
+        }
+        @if (isLoadingTriggerData) {
+          <button mat-raised-button (click)="onCancelRecordRefresh(recordId);" color="primary">
+            <mat-icon>cancel</mat-icon>
+            Stop Auto Refresh
+          </button>
+        }
       </div>
     </div>
     <div class="top-margin">

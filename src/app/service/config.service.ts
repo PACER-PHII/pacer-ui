@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Config} from "../domain/config";
-import {HttpBackend, HttpClient} from "@angular/common/http";
+import { HttpBackend, HttpClient } from "@angular/common/http";
 import {catchError, map, of} from "rxjs";
 import packageInfo from "../../../package.json";
 @Injectable({
