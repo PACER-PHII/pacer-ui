@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, map, repeat, takeWhile, takeLast, concatMap, from, scan, tap, catchError, of} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {CaseRecordDTO} from "../domain/case-record-dto";
 import {UtilsService} from "./utils.service";
 import {EnvironmentHandlerService} from "./environment-handler.service";

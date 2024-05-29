@@ -1,9 +1,13 @@
-<div *ngIf="!guardiansData?.length">{{appConstants.NO_DATA_TO_DISPLAY}}</div>
-<div *ngFor="let data of guardiansData">
+@if (!guardiansData?.length) {
+  <div>{{ appConstants.NO_DATA_TO_DISPLAY }}</div>
+}
+@for (data of guardiansData; track data) {
   <table>
-    <tr *ngFor=" let row of data">
-      <td class="title-width">{{ row.key }}</td>
-      <td>{{ row.value || ''}}</td>
-    </tr>
+    @for (row of data; track row) {
+      <tr>
+        <td class="title-width">{{ row.key }}</td>
+        <td>{{ row.value || '' }}</td>
+      </tr>
+    }
   </table>
-</div>
+}
