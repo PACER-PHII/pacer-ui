@@ -9,7 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatSortModule} from "@angular/material/sort";
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { RecordDetailsComponent } from './components/record-details/record-details.component';
 import {MatMenuModule} from "@angular/material/menu";
@@ -48,27 +48,25 @@ export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
 };
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    SearchResultsComponent,
-    RecordDetailsComponent,
-    RecordHistoryComponent,
-    PersonInfoComponent,
-    IdentityInfoComponent,
-    HealthcareProvidersComponent,
-    FacilityDataComponent,
-    GuardiansInfoComponent,
-    ImmunizationHistoryComponent,
-    MedicationsProvidedComponent,
-    LabDataComponent,
-    DateValuePipe,
-    DiagnosisComponent,
-    SymptomsComponent,
-    RecordDetailsContainerComponent,
-  ],
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [
+        AppComponent,
+        SearchResultsComponent,
+        RecordDetailsComponent,
+        RecordHistoryComponent,
+        PersonInfoComponent,
+        IdentityInfoComponent,
+        HealthcareProvidersComponent,
+        FacilityDataComponent,
+        GuardiansInfoComponent,
+        ImmunizationHistoryComponent,
+        MedicationsProvidedComponent,
+        LabDataComponent,
+        DateValuePipe,
+        DiagnosisComponent,
+        SymptomsComponent,
+        RecordDetailsContainerComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         MatFormFieldModule,
@@ -81,7 +79,6 @@ export const configFactory = (configService: ConfigService) => {
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatSortModule,
-        HttpClientModule,
         MatCardModule,
         MatGridListModule,
         MatListModule,
@@ -92,17 +89,14 @@ export const configFactory = (configService: ConfigService) => {
         MatExpansionModule,
         MatCheckboxModule,
         FormsModule,
-        MatProgressBarModule
-    ],
-  providers: [
-    AppConstants,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      deps: [ConfigService],
-      multi: true
-    },
-  ],
-  bootstrap: [AppComponent]
-})
+        MatProgressBarModule], providers: [
+        AppConstants,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: configFactory,
+            deps: [ConfigService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
